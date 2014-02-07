@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <HANDHISTORY>
+	<STAGE>
+		<TITLE>Holdem No Limit $2</TITLE>
+		<ID>682816736</ID>
+		<TIME>2007-06-15 05:16:34.006 (ET)</TIME>
+		 <TABLE>
+			<TITLE>MC MAHAN Ave (Real Money)</TITLE>
+			<CURRENCY>$</CURRENCY>
+			<ID>12345678</ID>
+			<SEATS>9</SEATS>
+			<DEALER>5</DEALER>
+			<SEAT>
+				<NUMBER>5</NUMBER>
+				<NAME>DANIER</NAME>
+				<CHIPS>203.20</CHIPS>
+				<ICON>http://image.quaner.me/id?100001</ICON>
+			</SEAT>
+			<SEAT>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<CHIPS>124.10</CHIPS>
+				<ICON>http://image.quaner.me/id?100001</ICON>
+			</SEAT>
+			<SEAT>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<CHIPS>88.25</CHIPS>
+				<ICON>http://image.quaner.me/id?100001</ICON>
+			</SEAT>
+			<SEAT>
+				<NUMBER>4</NUMBER>
+				<NAME>MARLBORO1007</NAME>
+				<CHIPS>100.25</CHIPS>
+				<ICON>http://image.quaner.me/id?100001</ICON>
+			</SEAT>
+			<SBLIND>
+				<NUMBER>6</NUMBER>
+				<CHIPS>1</CHIPS>
+			</SBLIND>
+			<BBLIND>
+				<NUMBER>1</NUMBER>
+				<CHIPS>2</CHIPS>
+			</BBLIND>
+		 </TABLE>
+		 <POKERCARD>
+			<HOLECARD>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<CARD>Kh 7d</CARD>
+			</HOLECARD>
+			<PLAYER>
+				<NUMBER>4</NUMBER>
+				<NAME>MARLBORO1007</NAME>
+				<ACTION>Folds</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>5</NUMBER>
+				<NAME>DANIER</NAME>
+				<ACTION>Folds</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<ACTION>Raise 6 to 6</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<ACTION>call 4 to 6</ACTION>
+			</PLAYER>
+			<FLOP>
+				<CARD>3h 5d 5h</CARD>     	
+				<POT>13</POT>				
+			</FLOP>
+			<PLAYER>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<ACTION>check</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<ACTION>check</ACTION>
+			</PLAYER>
+			<TURN>
+				<CARD>Ac</CARD>
+				<POT>13</POT>
+			</TURN>
+			<PLAYER>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<ACTION>check</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<ACTION>check</ACTION>
+			</PLAYER>			
+			<RIVER>
+				<CARD>Td</CARD>
+				<POT>13</POT>
+			</RIVER>
+			<PLAYER>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<ACTION>raise 10 to 10</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<ACTION>raise 20 to 20</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<ACTION>call 10 to 20</ACTION>
+			</PLAYER>
+		 </POKERCARD>
+		 <SHOWDOWN>
+			<PLAYER>
+				<NUMBER>6</NUMBER>					
+				<NAME>JAVAHAVA</NAME>				
+				<ACTION>+53</ACTION>				
+				<CARD>Ah Kd</CARD>					
+				<DESCRP>2 pair</DESCRP>				
+			<PLAYER>
+			<PLAYER>
+				<NUMBER>1</NUMBER>					
+				<NAME>MESON23</NAME>				
+				<CARD>Kh 7d</CARD>					
+				<DESCRP>1 pair</DESCRP>				
+			<PLAYER>		
+		 </SHOWDOWN>
+	 </STAGE>
+ </HANDHISTORY>

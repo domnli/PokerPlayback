@@ -1,0 +1,164 @@
+以下为文字格式显示的牌谱，根据后面的xml的牌谱记录自动生成
+#####################
+五号座 DANIER 筹码 203￥
+六号座 JAVAHAVA 筹码 124￥
+一号座 MESON23 筹码 88￥
+四号座 MARLBORO1007 筹码 100￥
+DANIER为庄家
+JAVAHAVA下小盲注 1￥
+MESON23下大盲注 2￥
+*** POCKET CARDS ***
+DANIER -  拿到手牌 Kh  7d 
+MARLBORO1007  - 弃牌
+DANIER - 弃牌 
+JAVAHAVA -  加注5￥到6￥
+MESON23 -  跟注4￥到6￥
+FLOP圈 - 3h 5d 5h 奖池 12￥
+JAVAHAVA - 看牌
+MESON23 - 看牌
+转牌圈 - Ac
+JAVAHAVA - 看牌
+MESON23 - 看牌
+河牌圈 - Td 
+JAVAHAVA - 加注10￥到10￥
+MESON23 - 加注20￥到20￥
+JAVAHAVA - 跟注10￥到20￥
+*** SHOW DOWN ***
+JAVAHAVA - 手牌Ah Kd 两对 赢得12￥
+MESON23 - 手牌Kh 7d 一对
+#####################
+
+以下为系统记录的牌谱，xml格式，具体说明见handhistory.txt
+ 
+<?xml version="1.0" encoding="utf-8"?>
+ <HANDHISTORY>
+	<STAGE>
+		<TITLE>Holdem No Limit $2</TITLE>
+		<ID>682816736</ID>
+		<TIME>2007-06-15 05:16:34.006 (ET)</TIME>
+		 <TABLE>
+			<TITLE>MC MAHAN Ave (Real Money)</TITLE>
+			<CURRENCY>$</CURRENCY>
+			<ID>12345678</ID>
+			<SEATS>9</SEATS>
+			<DEALER>5</DEALER>
+			<SEAT>
+				<NUMBER>5</NUMBER>
+				<NAME>DANIER</NAME>
+				<CHIPS>203.20</CHIPS>
+			</SEAT>
+			<SEAT>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<CHIPS>124.10</CHIPS>
+			</SEAT>
+			<SEAT>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<CHIPS>88.25</CHIPS>
+			</SEAT>
+			<SEAT>
+				<NUMBER>4</NUMBER>
+				<NAME>MARLBORO1007</NAME>
+				<CHIPS>100.25</CHIPS>
+			</SEAT>
+			<SBLIND>
+				<NUMBER>6</NUMBER>
+				<CHIPS>1</CHIPS>
+			</SBLIND>
+			<BBLIND>
+				<NUMBER>1</NUMBER>
+				<CHIPS>2</CHIPS>
+			</BBLIND>
+		 </TABLE>
+		 <POKERCARD>
+			<HOLECARD>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<CARD>Kh 7d</CARD>
+			</HOLECARD>
+			<PLAYER>
+				<NUMBER>4</NUMBER>
+				<NAME>MARLBORO1007</NAME>
+				<ACTION>Folds</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>5</NUMBER>
+				<NAME>DANIER</NAME>
+				<ACTION>Folds</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<ACTION>Raise 5 to 6</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<ACTION>call 4 to 6</ACTION>
+			</PLAYER>
+			<FLOP>
+				<CARD>3h 5d 5h</CARD>     	
+				<POT>12</POT>				
+			</FLOP>
+			<PLAYER>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<ACTION>check</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<ACTION>check</ACTION>
+			</PLAYER>
+			<TURN>
+				<CARD>Ac</CARD>
+				<POT>12</POT>
+			</TURN>
+			<PLAYER>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<ACTION>check</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<ACTION>check</ACTION>
+			</PLAYER>			
+			<RIVER>
+				<CARD>Td</CARD>
+				<POT>12</POT>
+			</RIVER>
+			<PLAYER>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<ACTION>raise 10 to 10</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>1</NUMBER>
+				<NAME>MESON23</NAME>
+				<ACTION>raise 20 to 20</ACTION>
+			</PLAYER>
+			<PLAYER>
+				<NUMBER>6</NUMBER>
+				<NAME>JAVAHAVA</NAME>
+				<ACTION>call 10 to 20</ACTION>
+			</PLAYER>
+		 </POKERCARD>
+		 <SHOWDOWN>
+			<PLAYER>
+				<NUMBER>6</NUMBER>					//桌位号
+				<NAME>JAVAHAVA</NAME>				//名称
+				<ACTION>52</ACTION>				//输赢的筹码数量, 分正负
+				<CARD>Ah Kd</CARD>					//手牌牌点，可选
+				<DESCRP>2 pair</DESCRP>				//手中牌型的描述，可选
+			<PLAYER>
+			<PLAYER>
+				<NUMBER>1</NUMBER>					//桌位号
+				<NAME>MESON23</NAME>				//名称
+				<CARD>Kh 7d</CARD>					//手牌牌点，可选
+				<DESCRP>1 pair</DESCRP>				//手中牌型的描述，可选
+			<PLAYER>		
+		 </SHOWDOWN>
+	 </STAGE>
+ </HANDHISTORY>
