@@ -6,11 +6,16 @@
 	<title>PokerPlayback</title>
 	<script src="iio/core/iioEngine.js"></script>
 	<script src="iio/PokerPlayback.js"></script>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 </head>
 <body style="text-align:center;background-color:rgb(105, 200, 245)">
 	<canvas id="pokerPanl" width="640" height="960"></canvas>
 </body>
 <script type="text/javascript">
-	iio.start(PokerPlayback,'pokerPanl');
+	$.getJSON('/poker/server/poker.php',function(data){
+		recordHelper.data = data;
+		console.log(data);
+		iio.start(PokerPlayback,'pokerPanl');
+	});
 </script>
 </html>

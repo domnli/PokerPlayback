@@ -14,25 +14,25 @@
 				<NUMBER>5</NUMBER>
 				<NAME>DANIER</NAME>
 				<CHIPS>203.20</CHIPS>
-				<ICON>http://image.quaner.me/id?100001</ICON>
+				<ICON>res/icon.png</ICON>
 			</SEAT>
 			<SEAT>
 				<NUMBER>6</NUMBER>
 				<NAME>JAVAHAVA</NAME>
 				<CHIPS>124.10</CHIPS>
-				<ICON>http://image.quaner.me/id?100001</ICON>
+				<ICON>res/icon.png</ICON>
 			</SEAT>
 			<SEAT>
 				<NUMBER>1</NUMBER>
 				<NAME>MESON23</NAME>
 				<CHIPS>88.25</CHIPS>
-				<ICON>http://image.quaner.me/id?100001</ICON>
+				<ICON>res/icon.png</ICON>
 			</SEAT>
 			<SEAT>
 				<NUMBER>4</NUMBER>
 				<NAME>MARLBORO1007</NAME>
 				<CHIPS>100.25</CHIPS>
-				<ICON>http://image.quaner.me/id?100001</ICON>
+				<ICON>res/icon.png</ICON>
 			</SEAT>
 			<SBLIND>
 				<NUMBER>6</NUMBER>
