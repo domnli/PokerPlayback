@@ -171,10 +171,22 @@ var PokerPlayback = function (io) {
         if (parseStr[1]) {
         	ret.money = parseStr[1];
         }
+        //console.log(ret);
         return ret; //{status: 'raise',money:10}
     }
-    function bubble(playerPosition, n) { //弹出用户行为气泡
-
+    function bubble(playerPosition, msg) { //弹出用户行为气泡
+    	if (typeof playerPosition.bubble.objBG == 'undefined') {
+    		playerPosition.bubble.objBG = new iio.SimpleRect(playerPosition.bubble, 140, 30)
+                                                    .setFillStyle('#457502'); // 气泡背景
+            playerPosition.bubble.obj = new iio.Text(msg, playerPosition.bubble.x, playerPosition.bubble.y + 5)
+                                                    .setFillStyle('white')
+                                                    .setTextAlign('center'); // 气泡文字
+            io.addToGroup('table', playerPosition.bubble.objBG);
+            io.addToGroup('table', playerPosition.bubble.obj);
+    	}
+    	playerPosition.bubble.objBG.setAlpha(0).fadeIn(.02);
+    	playerPosition.bubble.obj.setText(msg).setAlpha(0).fadeIn(.02);
+    	
     }
 
     function bet(players) { //玩家下注
@@ -190,6 +202,7 @@ var PokerPlayback = function (io) {
                 case 'raise':
                 case 'call':
                 case 'allin':
+                		bubble(playerPosition, action.status);
                         // plus bet
                         if (typeof playerPosition.bet.obj == 'undefined') {
                             playerPosition.bet.obj = new iio.Text(action.money, playerPosition.bet)
@@ -216,8 +229,31 @@ var PokerPlayback = function (io) {
                         }
                     break;
                 case 'check':
-                    break;
                 case 'folds':
+                	if (typeof playerPosition.bubble.objBG == 'undefined') {
+			    		playerPosition.bubble.objBG = new iio.SimpleRect(playerPosition.bubble, 140, 30)
+			                                                    .setFillStyle('#457502')
+			                                                    .setAlpha(0)
+			                                                    .fadeIn(.02); // 气泡背景
+			            playerPosition.bubble.obj = new iio.Text(action.status, playerPosition.bubble.x, playerPosition.bubble.y + 5)
+			                                                    .setFillStyle('white')
+			                                                    .setTextAlign('center')
+			                                                    .setAlpha(.01)
+			                                                    .enableUpdates(function(obj,dt,player){
+				                                                    	if (obj.styles.alpha > 1) {
+		                                                                obj.styles.alpha = 1;
+		                                                                execute(player);
+		                                                            } else if (obj.styles.alpha < 1){
+		                                                                obj.styles.alpha += .02;
+		                                                            }
+		                                                            return true;
+			                                                    },players[pos]); // 气泡文字
+			            io.addToGroup('table', playerPosition.bubble.objBG);
+			            io.addToGroup('table', playerPosition.bubble.obj);
+			    	} else {
+			    		playerPosition.bubble.objBG.setAlpha(0).fadeIn(.02);
+    	                playerPosition.bubble.obj.setText(action.status).setAlpha(.01);
+			    	}
                     break;
             }
             
