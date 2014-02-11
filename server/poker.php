@@ -22,10 +22,10 @@ class Poker {
 		preg_match("/<\/TURN>(.*)<RIVER>/s", $pokercard[0], $turn);
 		preg_match("/<\/RIVER>(.*)<\/POKERCARD>/s", $pokercard[0], $river);
 		//print_r($pokercard);
-		$countPreflop = preg_match_all("/<PLAYER>/", $preflop[0]);
-		$countFlop = preg_match_all("/<PLAYER>/", $flop[0]);
-		$countTurn = preg_match_all("/<PLAYER>/", $turn[0]);
-		$countRiver = preg_match_all("/<PLAYER>/", $river[0]);
+		$countPreflop = preg_match_all("/<PLAYER>/", $preflop[0], $m1);
+		$countFlop = preg_match_all("/<PLAYER>/", $flop[0], $m2);
+		$countTurn = preg_match_all("/<PLAYER>/", $turn[0], $m3);
+		$countRiver = preg_match_all("/<PLAYER>/", $river[0], $m4);
 		//print_r($flop);
 		//echo ($flop[0])
 		$noseq = json_decode(json_encode($this->xmlObject->STAGE->POKERCARD),true);

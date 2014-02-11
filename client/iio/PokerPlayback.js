@@ -160,10 +160,26 @@ var PokerPlayback = function (io) {
     }
 
     function preFlopShow() { //preflop阶段下注
-        var pos = 0, players = pokercard.PREFLOP.PLAYER;
+        var players = pokercard.PREFLOP.PLAYER;
         bet2pot();
-        execute(players[pos]);
-        function execute(player) { //玩家下注
+        bet(players);
+    }
+
+    function actionStatus(action) { // call 2 to 4 raise 2 to 4 folds
+    	var parseStr = action.toLowerCase().split(' '), ret = {};
+        ret.status = parseStr[0];
+        if (parseStr[1]) {
+        	ret.money = parseStr[1];
+        }
+        return ret; //{status: 'raise',money:10}
+    }
+    function bubble(playerPosition, n) { //弹出用户行为气泡
+
+    }
+
+    function bet(players) { //玩家下注
+    	var pos = 0;
+        function execute(player) { 
             if (typeof player == 'undefined') {
                 return;
             }
@@ -172,6 +188,8 @@ var PokerPlayback = function (io) {
             var action = actionStatus(player.ACTION);
             switch(action.status) {
                 case 'raise':
+                case 'call':
+                case 'allin':
                         // plus bet
                         if (typeof playerPosition.bet.obj == 'undefined') {
                             playerPosition.bet.obj = new iio.Text(action.money, playerPosition.bet)
@@ -197,19 +215,15 @@ var PokerPlayback = function (io) {
                             playerPosition.chips.obj.setText(parseFloat(playerPosition.chips.obj.text) - parseFloat(action.money));
                         }
                     break;
+                case 'check':
+                    break;
+                case 'folds':
+                    break;
             }
             
         }
+        execute(players[pos]);
     }
-
-    function actionStatus(action) {
-        return {status: 'raise',money:10};
-    }
-    function bubble(playerPosition, n) { //弹出用户行为气泡
-
-    }
-
-
 
     function bet2pot() { //收集玩家下注到奖池
 
@@ -223,6 +237,7 @@ var PokerPlayback = function (io) {
     recordHelper.io = io;
     recordHelper.testt = testPosition;
     recordHelper.pre = preFlopShow;
+    recordHelper.act = actionStatus;
   };
 var recordHelper = {
     data : {},
