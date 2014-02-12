@@ -1,0 +1,63 @@
+#Game No : 512947072
+***** 888poker Hand History for Game 512947072 *****
+1/2 Blinds No Limit Holdem - *** 
+Table Sugar Land 10 Max (Play Money)
+Seat 5 is the button
+Total number of players : 9
+Seat 1: VabisV8R730 ( 193.30 )
+Seat 2: Facehugger69 ( 562 )
+Seat 3: spirgis19 ( 158 )
+Seat 4: gaydar56 ( 234.60 )
+Seat 5: bos6337 ( 120.90 )
+Seat 6: mbu76816 ( 594.35 )
+Seat 7: Mancubus69 ( 1,318.50 )
+Seat 8: KurashevichV ( 198 )
+Seat 9: AAWackler ( 200 )
+mbu76816 posts small blind [1]
+Mancubus69 posts big blind [2]
+** Dealing down cards **
+KurashevichV folds
+AAWackler folds
+VabisV8R730 calls [2]
+Facehugger69 calls [2]
+spirgis19 calls [2]
+gaydar56 calls [2]
+bos6337 calls [2]
+mbu76816 calls [1]
+Mancubus69 checks
+** Dealing flop ** [ Qc, 7s, Tc ]
+mbu76816 checks
+Mancubus69 checks
+VabisV8R730 checks
+Facehugger69 bets [14]
+spirgis19 folds
+gaydar56 raises [28]
+bos6337 calls [28]
+mbu76816 calls [28]
+Mancubus69 folds
+VabisV8R730 raises [42]
+Facehugger69 calls [28]
+gaydar56 calls [14]
+bos6337 calls [14]
+mbu76816 calls [14]
+** Dealing turn ** [ 2h ]
+mbu76816 checks
+VabisV8R730 bets [74.65]
+Facehugger69 calls [74.65]
+gaydar56 calls [74.65]
+bos6337 calls [74.65]
+mbu76816 calls [74.65]
+** Dealing river ** [ 5c ]
+mbu76816 checks
+VabisV8R730 bets [74.65]
+Facehugger69 calls [74.65]
+gaydar56 calls [74.65]
+bos6337 calls [2.25]
+mbu76816 folds
+** Summary **
+VabisV8R730 shows [ Qh, Td ]
+Facehugger69 mucks [ 6d, Qs ]
+gaydar56 mucks [ Qd, 8h ]
+bos6337 mucks [ 9s, Ad ]
+VabisV8R730 collected [ 602.25 ]
+VabisV8R730 collected [ 217.20 ]

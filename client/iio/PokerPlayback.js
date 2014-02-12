@@ -32,8 +32,9 @@ var PokerPlayback = function (io) {
     if (table.SEATS == 5) {
         playerPositions = playerPositions5;
     }
-    io.setBGColor('rgba(0, 126, 255, 0.4)');
+    io.setBGImage('res/bg.png');
     io.addGroup('table'); //头像、名称、筹码组
+    io.addGroup('dinamic'); //可变物体
     /*for (i = 0; i < playerPositions.length; i++) {
         io.addToGroup('table',
             new iio.SimpleRect(playerPositions[i].icon, 120, 150)
@@ -164,6 +165,12 @@ var PokerPlayback = function (io) {
         bet2pot();
         bet(players);
     }
+    
+    function flopShow() { //flop阶段下注
+        // 展示三张牌
+        
+        // 下注
+    }
 
     function actionStatus(action) { // call 2 to 4 raise 2 to 4 folds
     	var parseStr = action.toLowerCase().split(' '), ret = {};
@@ -174,35 +181,40 @@ var PokerPlayback = function (io) {
         //console.log(ret);
         return ret; //{status: 'raise',money:10}
     }
-    function bubble(playerPosition, msg) { //弹出用户行为气泡
-    	if (typeof playerPosition.bubble.objBG == 'undefined') {
-    		playerPosition.bubble.objBG = new iio.SimpleRect(playerPosition.bubble, 140, 30)
-                                                    .setFillStyle('#457502'); // 气泡背景
-            playerPosition.bubble.obj = new iio.Text(msg, playerPosition.bubble.x, playerPosition.bubble.y + 5)
-                                                    .setFillStyle('white')
-                                                    .setTextAlign('center'); // 气泡文字
-            io.addToGroup('table', playerPosition.bubble.objBG);
-            io.addToGroup('table', playerPosition.bubble.obj);
-    	}
-    	playerPosition.bubble.objBG.setAlpha(0).fadeIn(.02);
-    	playerPosition.bubble.obj.setText(msg).setAlpha(0).fadeIn(.02);
-    	
-    }
 
     function bet(players) { //玩家下注
-    	var pos = 0;
-        function execute(player) { 
+        var pos = 0;
+        function execute(player) {
             if (typeof player == 'undefined') {
+                pos = 1;
                 return;
             }
             var playerPosition = playerPositions[player.NUMBER];
+            console.log(playerPosition,pos);
             pos++;
             var action = actionStatus(player.ACTION);
             switch(action.status) {
                 case 'raise':
                 case 'call':
                 case 'allin':
-                		bubble(playerPosition, action.status);
+                        //bubble
+                        if (typeof playerPosition.bubble.objBG != 'undefined') {
+                            io.rmvObj(playerPosition.bubble.objBG);
+                        }
+                        if (typeof playerPosition.bubble.obj != 'undefined') {
+                            io.rmvObj(playerPosition.bubble.obj);
+                        }
+                        playerPosition.bubble.objBG = new iio.SimpleRect(playerPosition.bubble, 140, 30)
+                                                                .setFillStyle('#457502')
+                                                                .setAlpha(0)
+                                                                .fadeIn(.02); // 气泡背景
+                        playerPosition.bubble.obj = new iio.Text(action.status, playerPosition.bubble.x, playerPosition.bubble.y + 5)
+                                                                .setFillStyle('white')
+                                                                .setTextAlign('center')
+                                                                .setAlpha(0)
+                                                                .fadeIn(.02); // 文字
+                        io.addToGroup('table',playerPosition.bubble.objBG);
+                        io.addToGroup('table',playerPosition.bubble.obj);
                         // plus bet
                         if (typeof playerPosition.bet.obj == 'undefined') {
                             playerPosition.bet.obj = new iio.Text(action.money, playerPosition.bet)
@@ -230,50 +242,66 @@ var PokerPlayback = function (io) {
                     break;
                 case 'check':
                 case 'folds':
-                	if (typeof playerPosition.bubble.objBG == 'undefined') {
-			    		playerPosition.bubble.objBG = new iio.SimpleRect(playerPosition.bubble, 140, 30)
-			                                                    .setFillStyle('#457502')
-			                                                    .setAlpha(0)
-			                                                    .fadeIn(.02); // 气泡背景
-			            playerPosition.bubble.obj = new iio.Text(action.status, playerPosition.bubble.x, playerPosition.bubble.y + 5)
-			                                                    .setFillStyle('white')
-			                                                    .setTextAlign('center')
-			                                                    .setAlpha(.01)
-			                                                    .enableUpdates(function(obj,dt,player){
-				                                                    	if (obj.styles.alpha > 1) {
-		                                                                obj.styles.alpha = 1;
-		                                                                execute(player);
-		                                                            } else if (obj.styles.alpha < 1){
-		                                                                obj.styles.alpha += .02;
-		                                                            }
-		                                                            return true;
-			                                                    },players[pos]); // 气泡文字
-			            io.addToGroup('table', playerPosition.bubble.objBG);
-			            io.addToGroup('table', playerPosition.bubble.obj);
-			    	} else {
-			    		playerPosition.bubble.objBG.setAlpha(0).fadeIn(.02);
-    	                playerPosition.bubble.obj.setText(action.status).setAlpha(.01);
-			    	}
+                    //bubble
+                    if (typeof playerPosition.bubble.objBG != 'undefined') {
+                        io.rmvObj(playerPosition.bubble.objBG);
+                        delete playerPosition.bubble.objBG;
+                    }
+                    if (typeof playerPosition.bubble.obj != 'undefined') {
+                        io.rmvObj(playerPosition.bubble.obj);
+                        delete playerPosition.bubble.obj;
+                    }
+		    		playerPosition.bubble.objBG = new iio.SimpleRect(playerPosition.bubble, 140, 30)
+		                                                    .setFillStyle('#457502')
+		                                                    .setAlpha(0)
+		                                                    .fadeIn(.02); // 气泡背景
+		            playerPosition.bubble.obj = new iio.Text(action.status, playerPosition.bubble.x, playerPosition.bubble.y + 5)
+		                                                    .setFillStyle('white')
+		                                                    .setTextAlign('center')
+		                                                    .setAlpha(.01)
+		                                                    .enableUpdates(function(obj,dt,player){
+			                                                    if (obj.styles.alpha > 1) {
+	                                                                obj.styles.alpha = 1;
+	                                                                execute(player);
+	                                                            } else if (obj.styles.alpha < 1){
+	                                                                obj.styles.alpha += .02;
+	                                                            }
+	                                                            return true;
+		                                                    },players[pos]); // 气泡文字
+		            io.addToGroup('table', playerPosition.bubble.objBG);
+		            io.addToGroup('table', playerPosition.bubble.obj);
                     break;
             }
             
         }
-        execute(players[pos]);
+        execute(players[0]);
     }
 
     function bet2pot() { //收集玩家下注到奖池
-
+        var pot = parseFloat(potPosition.obj.text);
+        for (var i = 0; i < seats.length; i++) {
+            if (typeof playerPositions[seats[i].NUMBER].blind.obj != 'undefined') { //盲注
+                pot += parseFloat(playerPositions[seats[i].NUMBER].blind.obj.text);
+                io.rmvObj(playerPositions[seats[i].NUMBER].blind.obj);
+            }
+            if (typeof playerPositions[seat[i].NUMBER].bet.obj != 'undefined') { //下注
+                pot += parseFloat(playerPositions[seat[i].NUMBER].bet.obj.text);
+                io.rmvObj(playerPositions[seat[i].NUMBER].bet.obj);
+            }
+        };
+        potPosition.obj.setText(pot);
     }
 
     holecardShow();
     blindShow();
     //preFlopShow();
-    io.setFramerate(60);
+    io.setFramerate(10);
     console.log(io);
     recordHelper.io = io;
     recordHelper.testt = testPosition;
     recordHelper.pre = preFlopShow;
     recordHelper.act = actionStatus;
+    recordHelper.b = bet2pot;
   };
 var recordHelper = {
     data : {},

@@ -12,7 +12,7 @@
 	<canvas id="pokerPanl" width="640" height="960"></canvas>
 </body>
 <script type="text/javascript">
-	$.getJSON('/server/poker.php',function(data){
+	$.getJSON('/poker/server/poker.php',function(data){
 		recordHelper.data = data;
 		console.log(data);
 		iio.start(PokerPlayback,'pokerPanl');
