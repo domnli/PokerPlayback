@@ -143,21 +143,28 @@ var PokerPlayback = function (io) {
     }
 
     function blindShow() { //盲注展示
-        playerPositions[table.SBLIND.NUMBER].blind.obj = new iio.Text('S ' + table.SBLIND.CHIPS, playerPositions[table.SBLIND.NUMBER].blind)
+        playerPositions[table.SBLIND.NUMBER].blind.obj = new iio.Text(table.SBLIND.CHIPS, playerPositions[table.SBLIND.NUMBER].blind)
                                                 .setFont('13px Microsoft YaHei')
                                                 .setTextAlign('center')
                                                 .setFillStyle('white')
                                                 .setAlpha(0)
                                                 .fadeIn(.02); // 小盲注
         io.addToGroup('table', playerPositions[table.SBLIND.NUMBER].blind.obj);
-
-        playerPositions[table.BBLIND.NUMBER].blind.obj = new iio.Text('B ' + table.BBLIND.CHIPS, playerPositions[table.BBLIND.NUMBER].blind)
+        // minus chips
+        if (typeof playerPositions[table.SBLIND.NUMBER].chips.obj != 'undefined') {
+            playerPositions[table.SBLIND.NUMBER].chips.obj.setText(parseFloat(playerPositions[table.SBLIND.NUMBER].chips.obj.text) - parseFloat(table.SBLIND.CHIPS));
+        }
+        playerPositions[table.BBLIND.NUMBER].blind.obj = new iio.Text(table.BBLIND.CHIPS, playerPositions[table.BBLIND.NUMBER].blind)
                                                 .setFont('13px Microsoft YaHei')
                                                 .setTextAlign('center')
                                                 .setFillStyle('white')
                                                 .setAlpha(0)
                                                 .fadeIn(.02); // 大盲注
         io.addToGroup('table', playerPositions[table.BBLIND.NUMBER].blind.obj);
+        // minus chips
+        if (typeof playerPositions[table.SBLIND.NUMBER].chips.obj != 'undefined') {
+            playerPositions[table.BBLIND.NUMBER].chips.obj.setText(parseFloat(playerPositions[table.BBLIND.NUMBER].chips.obj.text) - parseFloat(table.BBLIND.CHIPS));
+        }
     }
 
     function preFlopShow() { //preflop阶段下注
@@ -167,9 +174,50 @@ var PokerPlayback = function (io) {
     }
     
     function flopShow() { //flop阶段下注
+        var players = pokercard.FLOP.PLAYER, cards = pokercard.FLOP.CARD.split(' '), pot = pokercard.FLOP.POT;
+        bubbleClear();
         // 展示三张牌
-        
+        for (var i = 0; i < cards.length; i++) {
+        	(function(pos){
+                boardPositions[i].obj = new iio.SimpleRect(boardPositions[i], 45, 65)
+                                        .addImage('res/'+cards[i]+'.png', function(){
+                                                    io.addToGroup('table',boardPositions[pos].obj);
+                                                });
+            })(i);
+        };
         // 下注
+        bet2pot(pot);
+        bet(players);
+    }
+
+    function turnShow() {
+        var players = pokercard.TURN.PLAYER, card = pokercard.TURN.CARD, pot = pokercard.TURN.POT;
+        bubbleClear();
+        // 展示第四张牌
+        boardPositions[3].obj = new iio.SimpleRect(boardPositions[3], 45, 65)
+                                        .addImage('res/'+card+'.png', function(){
+                                                    io.addToGroup('table',boardPositions[3].obj);
+                                                });
+        // 下注
+        bet2pot(pot);
+        bet(players);
+    }
+
+    function riverShow() {
+    	var players = pokercard.RIVER.PLAYER, card = pokercard.RIVER.CARD, pot = pokercard.RIVER.POT;
+    	bubbleClear();
+    	// 展示第五张牌
+    	boardPositions[4].obj = new iio.SimpleRect(boardPositions[4], 45, 65)
+                                        .addImage('res/'+card+'.png', function(){
+                                                    io.addToGroup('table',boardPositions[4].obj);
+                                                });
+    	// 下注
+    	bet2pot(pot);
+    	bet(players);
+    }
+
+    function showdown() {
+    	bubbleClear();
     }
 
     function actionStatus(action) { // call 2 to 4 raise 2 to 4 folds
@@ -197,13 +245,6 @@ var PokerPlayback = function (io) {
                 case 'raise':
                 case 'call':
                 case 'allin':
-                        //bubble
-                        if (typeof playerPosition.bubble.objBG != 'undefined') {
-                            io.rmvObj(playerPosition.bubble.objBG);
-                        }
-                        if (typeof playerPosition.bubble.obj != 'undefined') {
-                            io.rmvObj(playerPosition.bubble.obj);
-                        }
                         playerPosition.bubble.objBG = new iio.SimpleRect(playerPosition.bubble, 140, 30)
                                                                 .setFillStyle('#457502')
                                                                 .setAlpha(0)
@@ -242,15 +283,6 @@ var PokerPlayback = function (io) {
                     break;
                 case 'check':
                 case 'folds':
-                    //bubble
-                    if (typeof playerPosition.bubble.objBG != 'undefined') {
-                        io.rmvObj(playerPosition.bubble.objBG);
-                        delete playerPosition.bubble.objBG;
-                    }
-                    if (typeof playerPosition.bubble.obj != 'undefined') {
-                        io.rmvObj(playerPosition.bubble.obj);
-                        delete playerPosition.bubble.obj;
-                    }
 		    		playerPosition.bubble.objBG = new iio.SimpleRect(playerPosition.bubble, 140, 30)
 		                                                    .setFillStyle('#457502')
 		                                                    .setAlpha(0)
@@ -276,32 +308,43 @@ var PokerPlayback = function (io) {
         }
         execute(players[0]);
     }
-
-    function bet2pot() { //收集玩家下注到奖池
+    function bubbleClear() { //清空气泡
+    	for (var i = 0; i < seats.length; i++) {
+    		if (typeof playerPositions[seats[i].NUMBER].bubble.obj != 'undefined') {
+    			io.rmvObj(playerPositions[seats[i].NUMBER].bubble.obj);
+    			playerPositions[seats[i].NUMBER].bubble.obj = undefined;
+    		}
+    	};
+    }
+    function bet2pot(given) { //收集玩家下注到奖池
         var pot = parseFloat(potPosition.obj.text);
         for (var i = 0; i < seats.length; i++) {
             if (typeof playerPositions[seats[i].NUMBER].blind.obj != 'undefined') { //盲注
                 pot += parseFloat(playerPositions[seats[i].NUMBER].blind.obj.text);
                 io.rmvObj(playerPositions[seats[i].NUMBER].blind.obj);
+                playerPositions[seats[i].NUMBER].blind.obj = undefined;
             }
-            if (typeof playerPositions[seat[i].NUMBER].bet.obj != 'undefined') { //下注
-                pot += parseFloat(playerPositions[seat[i].NUMBER].bet.obj.text);
-                io.rmvObj(playerPositions[seat[i].NUMBER].bet.obj);
+            if (typeof playerPositions[seats[i].NUMBER].bet.obj != 'undefined') { //下注
+                pot += parseFloat(playerPositions[seats[i].NUMBER].bet.obj.text);
+                io.rmvObj(playerPositions[seats[i].NUMBER].bet.obj);
+                playerPositions[seats[i].NUMBER].bet.obj = undefined;
             }
         };
-        potPosition.obj.setText(pot);
+        potPosition.obj.setText(typeof given == 'undefined' ? pot : given);
     }
 
-    holecardShow();
     blindShow();
+    setTimeout(holecardShow,2000);
+    //holecardShow();
     //preFlopShow();
-    io.setFramerate(10);
-    console.log(io);
+    io.setFramerate(60);
     recordHelper.io = io;
-    recordHelper.testt = testPosition;
+    recordHelper.testPosition = testPosition;
     recordHelper.pre = preFlopShow;
     recordHelper.act = actionStatus;
-    recordHelper.b = bet2pot;
+    recordHelper.flop = flopShow;
+    recordHelper.turn = turnShow;
+    recordHelper.river = riverShow;
   };
 var recordHelper = {
     data : {},
