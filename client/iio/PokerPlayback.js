@@ -22,11 +22,11 @@ var PokerPlayback = function (io) {
       ],
       potPosition = {x : 325, y : 350},
       boardPositions = [
-            {x : 230, y : 450},
-            {x : 276, y : 450},
-            {x : 322, y : 450},
-            {x : 368, y : 450},
-            {x : 414, y : 450}
+            {x : 190, y : 510},
+            {x : 256, y : 510},
+            {x : 322, y : 510},
+            {x : 398, y : 510},
+            {x : 465, y : 510}
         ];
     var  i, record = recordHelper.data, table = record.STAGE.TABLE, seats = table.SEAT, pokercard = record.STAGE.POKERCARD;
     if (table.SEATS == 5) {
@@ -35,7 +35,7 @@ var PokerPlayback = function (io) {
     io.setBGImage('res/bg.png');
     io.addGroup('table'); //头像、名称、筹码组
     io.addGroup('dinamic'); //可变物体
-    /*for (i = 0; i < playerPositions.length; i++) {
+    /*for (i = 0; i < playerPositions.length; i++) { //占位背景
         io.addToGroup('table',
             new iio.SimpleRect(playerPositions[i].icon, 120, 150)
                     .setFillStyle('white')
@@ -52,14 +52,14 @@ var PokerPlayback = function (io) {
         })(seats[i].NUMBER);
 
         playerPositions[seats[i].NUMBER].name.obj = new iio.Text(seats[i].NAME, playerPositions[seats[i].NUMBER].name)
-                                    .setFont('14px Microsoft YaHei')
+                                    .setFont('16px Microsoft YaHei')
                                     .setTextAlign('center')
                                     .setFillStyle('white'); // 名称
         io.addToGroup('table', playerPositions[seats[i].NUMBER].name.obj);
-     /*   playerPositions[i].chips.bgobj = new iio.SimpleRect(playerPositions[i].chips.x, playerPositions[i].chips.y - 5, 80, 20)
+        playerPositions[seats[i].NUMBER].chips.objBG = new iio.SimpleRect(playerPositions[seats[i].NUMBER].chips.x, playerPositions[seats[i].NUMBER].chips.y - 5, 80, 20)
                                         .setFillStyle('black')
                                         .setAlpha(.3); // 筹码背景
-        io.addToGroup('table', playerPositions[i].chips.bgobj);*/
+        io.addToGroup('table', playerPositions[seats[i].NUMBER].chips.objBG);
         playerPositions[seats[i].NUMBER].chips.obj = new iio.Text(seats[i].CHIPS, playerPositions[seats[i].NUMBER].chips)
                                     .setFont('12px Microsoft YaHei')
                                     .setTextAlign('center')
@@ -67,59 +67,79 @@ var PokerPlayback = function (io) {
         io.addToGroup('table', playerPositions[seats[i].NUMBER].chips.obj);
     };
 
-    for ()
+    for (i = 1; i < playerPositions.length; i++) {
+    	if (typeof playerPositions[i].icon.obj == 'undefined' ) {
+    		(function(pos){
+    			playerPositions[i].icon.obj = new iio.Circle(playerPositions[i].icon, 30)
+    			                                  .addImage('res/empty.png',function(){
+    			                                  	    io.addToGroup('table',playerPositions[pos].icon.obj);
+    			                                  }); //空闲头像
+    		})(i);
+    	}
+    };
 
-    function testPosition() {
-        for (var i = 1; i < playerPositions.length; i++) { // 位置测试
-            (function(pos){
-                playerPositions[i].holecard[0].obj = new iio.SimpleRect(playerPositions[i].holecard[0], 30, 45)
-                                            .addImage('res/2d.png', function(){
-                                                                    io.addToGroup('table',playerPositions[pos].holecard[0].obj);
-                                                                }); // 底牌1
-                playerPositions[i].holecard[1].obj = new iio.SimpleRect(playerPositions[i].holecard[1], 30, 45)
-                                            .addImage('res/2d.png', function(){
-                                                                    io.addToGroup('table',playerPositions[pos].holecard[1].obj);
-                                                                }); // 底牌2
-                playerPositions[i].icon.obj = new iio.Circle(playerPositions[i].icon, 30)
-                                            .setStrokeStyle('white',2)
-                                            .addImage('res/icon.png', function(){
-                                                                    io.addToGroup('table',playerPositions[pos].icon.obj);
-                                                                }); // 头像
-                playerPositions[i].bubble.objBG = new iio.SimpleRect(playerPositions[i].bubble, 140, 30)
-                                                    .setFillStyle('#457502')
-                                                    .setAlpha(1); // 气泡背景
-                io.addToGroup('table', playerPositions[i].bubble.objBG);
-                playerPositions[i].bubble.obj = new iio.Text('bubblebubble', playerPositions[i].bubble.x, playerPositions[i].bubble.y + 5)
-                                                    .setFillStyle('white')
-                                                    .setTextAlign('center'); // 气泡文字
-                io.addToGroup('table', playerPositions[i].bubble.obj);
-            })(i);
-        };
-    }
-
-    playerPositions[table.DEALER].dealer.obj = new iio.Text('D', playerPositions[table.DEALER].dealer)
-                                            .setFont('20px Microsoft YaHei')
-                                            .setTextAlign('center')
-                                            .setFillStyle('white'); // 庄家标识
+    playerPositions[table.DEALER].dealer.obj = new iio.SimpleRect(playerPositions[table.DEALER].dealer,20)
+                                            .addImage('res/dealer.png',function(){
+                                            	io.addToGroup('table',playerPositions[table.DEALER].dealer.obj);
+                                            }); // 庄家标识
     io.addToGroup('table', playerPositions[table.DEALER].dealer.obj);
-
-    potPosition.obj = new iio.Text('0', potPosition)
-                            .setFont('30px Microsoft YaHei')
+    
+    potPosition.objBG = new iio.SimpleRect(potPosition,127,44)
+                            .addImage('res/pot.png',function(){
+                            	io.addToGroup('table',potPosition.objBG);
+                            });
+    potPosition.obj = new iio.Text('0', potPosition.x + 20,potPosition.y + 7)
+                            .setFont('20px Microsoft YaHei')
                             .setTextAlign('center')
                             .setFillStyle('white'); // 奖池
     io.addToGroup('table', potPosition.obj);
-
     
-    //payChipsAnim(playerPositions[table.BBLIND.NUMBER].blind.obj, playerPositions[table.BBLIND.NUMBER].icon, playerPositions[table.BBLIND.NUMBER].blind);
-    /*
     for (i = 0; i < boardPositions.length; i++) { //牌面
         (function(pos){
-            boardPositions[i].obj = new iio.SimpleRect(boardPositions[i], 45, 65)
+            boardPositions[i].obj = new iio.SimpleRect(boardPositions[i], 66, 95)
                                     .addImage('res/Ad.png', function(){
                                                 io.addToGroup('table',boardPositions[pos].obj);
                                             });
         })(i);
-    };*/
+    };
+
+    function blindShow() { //盲注展示
+    	playerPositions[table.SBLIND.NUMBER].bet.objBG = new iio.SimpleRect(playerPositions[table.SBLIND.NUMBER].bet.x,playerPositions[table.SBLIND.NUMBER].bet.y - 30,28)
+    	                                                    .setAlpha(0)
+    	                                                    .fadeIn(.2)
+    	                                                    .addImage('res/chips.png',function(){
+    	                                                    	io.addToGroup('table',playerPositions[table.SBLIND.NUMBER].bet.objBG);
+    	                                                    });
+        playerPositions[table.SBLIND.NUMBER].bet.obj = new iio.Text(table.SBLIND.CHIPS, playerPositions[table.SBLIND.NUMBER].bet)
+                                                .setFont('16px Microsoft YaHei')
+                                                .setTextAlign('center')
+                                                .setFillStyle('white')
+                                                .setAlpha(0)
+                                                .fadeIn(.2); // 小盲注
+        io.addToGroup('table', playerPositions[table.SBLIND.NUMBER].bet.obj);
+        // minus chips
+        if (typeof playerPositions[table.SBLIND.NUMBER].chips.obj != 'undefined') {
+            playerPositions[table.SBLIND.NUMBER].chips.obj.setText(parseFloat(playerPositions[table.SBLIND.NUMBER].chips.obj.text) - parseFloat(table.SBLIND.CHIPS));
+        }
+
+        playerPositions[table.BBLIND.NUMBER].bet.objBG = new iio.SimpleRect(playerPositions[table.BBLIND.NUMBER].bet.x,playerPositions[table.BBLIND.NUMBER].bet.y - 30,28)
+    	                                                    .setAlpha(0)
+    	                                                    .fadeIn(.2)
+    	                                                    .addImage('res/chips.png',function(){
+    	                                                    	io.addToGroup('table',playerPositions[table.BBLIND.NUMBER].bet.objBG);
+    	                                                    });
+        playerPositions[table.BBLIND.NUMBER].bet.obj = new iio.Text(table.BBLIND.CHIPS, playerPositions[table.BBLIND.NUMBER].bet)
+                                                .setFont('16px Microsoft YaHei')
+                                                .setTextAlign('center')
+                                                .setFillStyle('white')
+                                                .setAlpha(0)
+                                                .fadeIn(.2); // 大盲注
+        io.addToGroup('table', playerPositions[table.BBLIND.NUMBER].bet.obj);
+        // minus chips
+        if (typeof playerPositions[table.SBLIND.NUMBER].chips.obj != 'undefined') {
+            playerPositions[table.BBLIND.NUMBER].chips.obj.setText(parseFloat(playerPositions[table.BBLIND.NUMBER].chips.obj.text) - parseFloat(table.BBLIND.CHIPS));
+        }
+    }
 
     function holecardShow() { //底牌展示
         var holecard = pokercard.HOLECARD;
@@ -129,13 +149,13 @@ var PokerPlayback = function (io) {
         for (var i = 0; i < holecard.length; i++) {
             (function(pos){
                 var cards = holecard[i].CARD.split(' ');
-                playerPositions[holecard[i].NUMBER].holecard[0].obj = new iio.SimpleRect(playerPositions[holecard[i].NUMBER].holecard[0], 30, 45)
+                playerPositions[holecard[i].NUMBER].holecard[0].obj = new iio.SimpleRect(playerPositions[holecard[i].NUMBER].holecard[0], 66, 95)
                                             .setAlpha(0)
                                             .fadeIn(.02)
                                             .addImage('res/'+cards[0]+'.png', function(){
                                                                     io.addToGroup('table',playerPositions[pos].holecard[0].obj);
                                                                 }); // 底牌1
-                playerPositions[holecard[i].NUMBER].holecard[1].obj = new iio.SimpleRect(playerPositions[holecard[i].NUMBER].holecard[1], 30, 45)
+                playerPositions[holecard[i].NUMBER].holecard[1].obj = new iio.SimpleRect(playerPositions[holecard[i].NUMBER].holecard[1], 66, 95)
                                             .setAlpha(0)
                                             .fadeIn(.02)
                                             .addImage('res/'+cards[1]+'.png', function(){
@@ -143,31 +163,6 @@ var PokerPlayback = function (io) {
                                                                 }); // 底牌2
             })(holecard[i].NUMBER);
         };
-    }
-
-    function blindShow() { //盲注展示
-        playerPositions[table.SBLIND.NUMBER].blind.obj = new iio.Text(table.SBLIND.CHIPS, playerPositions[table.SBLIND.NUMBER].blind)
-                                                .setFont('13px Microsoft YaHei')
-                                                .setTextAlign('center')
-                                                .setFillStyle('white')
-                                                .setAlpha(0)
-                                                .fadeIn(.02); // 小盲注
-        io.addToGroup('table', playerPositions[table.SBLIND.NUMBER].blind.obj);
-        // minus chips
-        if (typeof playerPositions[table.SBLIND.NUMBER].chips.obj != 'undefined') {
-            playerPositions[table.SBLIND.NUMBER].chips.obj.setText(parseFloat(playerPositions[table.SBLIND.NUMBER].chips.obj.text) - parseFloat(table.SBLIND.CHIPS));
-        }
-        playerPositions[table.BBLIND.NUMBER].blind.obj = new iio.Text(table.BBLIND.CHIPS, playerPositions[table.BBLIND.NUMBER].blind)
-                                                .setFont('13px Microsoft YaHei')
-                                                .setTextAlign('center')
-                                                .setFillStyle('white')
-                                                .setAlpha(0)
-                                                .fadeIn(.02); // 大盲注
-        io.addToGroup('table', playerPositions[table.BBLIND.NUMBER].blind.obj);
-        // minus chips
-        if (typeof playerPositions[table.SBLIND.NUMBER].chips.obj != 'undefined') {
-            playerPositions[table.BBLIND.NUMBER].chips.obj.setText(parseFloat(playerPositions[table.BBLIND.NUMBER].chips.obj.text) - parseFloat(table.BBLIND.CHIPS));
-        }
     }
 
     function preFlopShow() { //preflop阶段下注
@@ -335,14 +330,51 @@ var PokerPlayback = function (io) {
         potPosition.obj.setText(typeof given == 'undefined' ? pot : given);
     }
 
+    function testPosition() {
+        for (var i = 1; i < playerPositions.length; i++) { // 位置测试
+            (function(pos){
+                playerPositions[i].holecard[0].obj = new iio.SimpleRect(playerPositions[i].holecard[0], 30, 45)
+                                            .addImage('res/2d.png', function(){
+                                                                    io.addToGroup('table',playerPositions[pos].holecard[0].obj);
+                                                                }); // 底牌1
+                playerPositions[i].holecard[1].obj = new iio.SimpleRect(playerPositions[i].holecard[1], 30, 45)
+                                            .addImage('res/2d.png', function(){
+                                                                    io.addToGroup('table',playerPositions[pos].holecard[1].obj);
+                                                                }); // 底牌2
+                playerPositions[i].icon.obj = new iio.Circle(playerPositions[i].icon, 30)
+                                            .setStrokeStyle('white',2)
+                                            .addImage('res/icon.png', function(){
+                                                                    io.addToGroup('table',playerPositions[pos].icon.obj);
+                                                                }); // 头像
+                playerPositions[i].bubble.objBG = new iio.SimpleRect(playerPositions[i].bubble, 140, 30)
+                                                    .setFillStyle('#457502')
+                                                    .setAlpha(1); // 气泡背景
+                io.addToGroup('table', playerPositions[i].bubble.objBG);
+                playerPositions[i].bubble.obj = new iio.Text('bubblebubble', playerPositions[i].bubble.x, playerPositions[i].bubble.y + 5)
+                                                    .setFillStyle('white')
+                                                    .setTextAlign('center'); // 气泡文字
+                io.addToGroup('table', playerPositions[i].bubble.obj);
+            })(i);
+        };
+    }
     io.setFramerate(60);
     recordHelper.io = io;
     recordHelper.testPosition = testPosition;
+    recordHelper.blind = blindShow;
+    recordHelper.holecard = holecardShow;
     recordHelper.pre = preFlopShow;
     recordHelper.act = actionStatus;
     recordHelper.flop = flopShow;
     recordHelper.turn = turnShow;
     recordHelper.river = riverShow;
+	function start(){
+		setTimeout(blindShow,1000);
+	    setTimeout(holecardShow,2000);
+	    setTimeout(preFlopShow,4000);
+	    setTimeout(flopShow,6000);
+	    setTimeout(turnShow,8000);
+	    setTimeout(riverShow,12000);
+	}
   };
 var recordHelper = {
     data : {},
