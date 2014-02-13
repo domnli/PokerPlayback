@@ -66,6 +66,9 @@ var PokerPlayback = function (io) {
                                     .setFillStyle('white'); // 筹码
         io.addToGroup('table', playerPositions[seats[i].NUMBER].chips.obj);
     };
+
+    for ()
+
     function testPosition() {
         for (var i = 1; i < playerPositions.length; i++) { // 位置测试
             (function(pos){
@@ -238,7 +241,6 @@ var PokerPlayback = function (io) {
                 return;
             }
             var playerPosition = playerPositions[player.NUMBER];
-            console.log(playerPosition,pos);
             pos++;
             var action = actionStatus(player.ACTION);
             switch(action.status) {
@@ -333,10 +335,6 @@ var PokerPlayback = function (io) {
         potPosition.obj.setText(typeof given == 'undefined' ? pot : given);
     }
 
-    blindShow();
-    setTimeout(holecardShow,2000);
-    //holecardShow();
-    //preFlopShow();
     io.setFramerate(60);
     recordHelper.io = io;
     recordHelper.testPosition = testPosition;
