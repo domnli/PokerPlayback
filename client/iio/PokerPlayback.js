@@ -2,7 +2,7 @@
 var PokerPlayback = function (io) {
     var playerPositions = [
         {},
-        {name : {x : 330, y : 700}, icon : {x : 330, y : 750}, chips : {x : 330, y : 800}, dealer : {x : 280, y : 680}, blind : {x : 340, y : 680}, bet : {x : 340, y : 650}, holecard : [{x : 315, y : 750}, {x : 346, y : 750}], bubble : {x : 330, y : 700}},
+        {name : {x : 330, y : 750}, icon : {x : 330, y : 870}, chips : {x : 330, y : 930}, dealer : {x : 280, y : 680}, blind : {x : 340, y : 680}, bet : {x : 340, y : 650}, holecard : [{x : 315, y : 750}, {x : 346, y : 750}], bubble : {x : 330, y : 700}},
         {name : {x : 80, y : 560}, icon : {x : 80, y : 610}, chips : {x : 80, y : 660}, dealer : {x : 130, y : 600}, blind : {x : 130, y : 630}, bet : {x : 160, y : 630}, holecard : [{x : 65, y : 610}, {x : 96, y : 610}], bubble : {x : 80, y : 560}},
         {name : {x : 80, y : 360}, icon : {x : 80, y : 410}, chips : {x : 80, y : 460}, dealer : {x : 130, y : 400}, blind : {x : 130, y : 430}, bet : {x : 160, y : 430}, holecard : [{x : 65, y : 410}, {x : 96, y : 410}], bubble : {x : 80, y : 360}},
         {name : {x : 80, y : 160}, icon : {x : 80, y : 210}, chips : {x : 80, y : 260}, dealer : {x : 130, y : 200}, blind : {x : 130, y : 230}, bet : {x : 160, y : 230}, holecard : [{x : 65, y : 210}, {x : 96, y : 210}], bubble : {x : 80, y : 160}},
@@ -44,7 +44,7 @@ var PokerPlayback = function (io) {
     };*/
     for (i = 0; i < seats.length; i++) {
         (function(pos){
-            playerPositions[seats[i].NUMBER].icon.obj = new iio.Circle(playerPositions[seats[i].NUMBER].icon, 30)
+            playerPositions[seats[i].NUMBER].icon.obj = new iio.Circle(playerPositions[seats[i].NUMBER].icon, 40)
                                         .setStrokeStyle('white',2)
                                         .addImage(seats[i].ICON, function(){
                                                                 io.addToGroup('table',playerPositions[pos].icon.obj);
@@ -70,7 +70,7 @@ var PokerPlayback = function (io) {
     for (i = 1; i < playerPositions.length; i++) {
     	if (typeof playerPositions[i].icon.obj == 'undefined' ) {
     		(function(pos){
-    			playerPositions[i].icon.obj = new iio.Circle(playerPositions[i].icon, 30)
+    			playerPositions[i].icon.obj = new iio.Circle(playerPositions[i].icon, 41)
     			                                  .addImage('res/empty.png',function(){
     			                                  	    io.addToGroup('table',playerPositions[pos].icon.obj);
     			                                  }); //空闲头像
@@ -150,12 +150,14 @@ var PokerPlayback = function (io) {
             (function(pos){
                 var cards = holecard[i].CARD.split(' ');
                 playerPositions[holecard[i].NUMBER].holecard[0].obj = new iio.SimpleRect(playerPositions[holecard[i].NUMBER].holecard[0], 66, 95)
+                                            .rotate(-Math.PI/36)
                                             .setAlpha(0)
                                             .fadeIn(.02)
                                             .addImage('res/'+cards[0]+'.png', function(){
                                                                     io.addToGroup('table',playerPositions[pos].holecard[0].obj);
                                                                 }); // 底牌1
                 playerPositions[holecard[i].NUMBER].holecard[1].obj = new iio.SimpleRect(playerPositions[holecard[i].NUMBER].holecard[1], 66, 95)
+                                            .rotate(Math.PI/36)
                                             .setAlpha(0)
                                             .fadeIn(.02)
                                             .addImage('res/'+cards[1]+'.png', function(){
