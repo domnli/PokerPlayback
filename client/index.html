@@ -10,12 +10,13 @@
 </head>
 <body style="background-color:rgb(105, 200, 245);margin:0">
 	<canvas id="pokerPanl" width="640px" height="960px"></canvas>
-	<div id ="infoPanl" style="width:640px;height:600px;text-align:center;padding:10px"></div>
+	<div id ="infoPanl" style="width:620px;height:600px;background-color:white;text-align:center;padding:10px"></div>
 </body>
 <script type="text/javascript">
-	$.getJSON('/poker/server/poker.php',function(data){
+	$.getJSON('/server/poker.php',function(data){
 		recordHelper.data = data;
 		recordHelper.infoPanl = $('#infoPanl');
+		console.log(recordHelper.infoPanl);
 		iio.start(PokerPlayback,'pokerPanl');
 	});
 </script>

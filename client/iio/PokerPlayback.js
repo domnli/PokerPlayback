@@ -44,6 +44,7 @@ var PokerPlayback = function (io) {
     };*/
     function initTable() {
         recordHelper.echo(record.STAGE.TITLE + '-' + table.TITLE + ' ' + record.STAGE.TIME);
+        recordHelper.echo('庄家位置 ' + table.DEALER);
 	    for (i = 0; i < seats.length; i++) {
 	        (function(pos){
 	            playerPositions[seats[i].NUMBER].icon.obj = new iio.Circle(playerPositions[seats[i].NUMBER].icon, 40)
@@ -536,6 +537,6 @@ var recordHelper = {
     data : {},
     infoPanl : {},
     echo : function (msg) {
-        infoPanl.append('<p>'+msg+'</p>')
+       this.infoPanl.append('<p>'+msg+'</p>')
     }
 };
