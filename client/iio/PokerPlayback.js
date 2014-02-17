@@ -43,6 +43,7 @@ var PokerPlayback = function (io) {
             );
     };*/
     function initTable() {
+        recordHelper.echo(record.STAGE.TITLE + '-' + table.TITLE + ' ' + record.STAGE.TIME);
 	    for (i = 0; i < seats.length; i++) {
 	        (function(pos){
 	            playerPositions[seats[i].NUMBER].icon.obj = new iio.Circle(playerPositions[seats[i].NUMBER].icon, 40)
@@ -252,14 +253,16 @@ var PokerPlayback = function (io) {
 	                                                           .setFillStyle('black');
 	        io.addToGroup('table',playerPositions[players[i].NUMBER].chips.obj);
     		// 展示所赢筹码
-    		playerPositions[players[i].NUMBER].bubble.objBG = new iio.SimpleRect(playerPositions[players[i].NUMBER].bubble.x, playerPositions[players[i].NUMBER].bubble.y - 5, 80, 20)
-    		                                                     .setFillStyle('red');
-	        io.addToGroup('table',playerPositions[players[i].NUMBER].bubble.objBG);
-	        playerPositions[players[i].NUMBER].bubble.obj = new iio.Text(players[i].ACTION, playerPositions[players[i].NUMBER].bubble)
-	                                                           .setFont('16px Microsoft YaHei')
-	                                                           .setTextAlign('center')
-	                                                           .setFillStyle('white');
-	        io.addToGroup('table',playerPositions[players[i].NUMBER].bubble.obj);
+            if (typeof players[i].ACTION != 'undefined') {
+                playerPositions[players[i].NUMBER].bubble.objBG = new iio.SimpleRect(playerPositions[players[i].NUMBER].bubble.x, playerPositions[players[i].NUMBER].bubble.y - 5, 80, 20)
+                                                                     .setFillStyle('red');
+                io.addToGroup('table',playerPositions[players[i].NUMBER].bubble.objBG);
+                playerPositions[players[i].NUMBER].bubble.obj = new iio.Text(players[i].ACTION, playerPositions[players[i].NUMBER].bubble)
+                                                                   .setFont('16px Microsoft YaHei')
+                                                                   .setTextAlign('center')
+                                                                   .setFillStyle('white');
+                io.addToGroup('table',playerPositions[players[i].NUMBER].bubble.obj);
+            }
 
     	};
     }
@@ -411,9 +414,36 @@ var PokerPlayback = function (io) {
 	}
 	function stop(){
 		io.rmvAll();
-		function restorePositions(){
+		function restorePositions(arr){
 			// TODO 遍历playerPositions 设置 .obj = undefined;
+            if (Object.prototype.toString.call(arr) === '[object Array]') {
+                for (var i = 0; i < arr.length; i++) {
+                    console.log('array',arr[i]);
+                    restorePositions(arr[i]);
+                }    
+            }
+            if (Object.prototype.toString.call(arr) === '[object Object]') {
+                console.log('object',arr);
+                if (typeof arr.x != 'undefined' && typeof arr.obj != 'undefined') {
+                    console.log('clear',arr);
+                    arr.obj = undefined;
+                    if(typeof arr.objBG != 'undefined') {
+                        arr.objBG = undefined;
+                    }
+                } else {
+                    for(var prot in arr){
+                        //if (Object.prototype.toString.call(arr[i][prot]) === '[object Array]') {
+                            restorePositions(arr[prot]);
+                        //}
+                        //if (Object.prototype.toString.call(arr[i][prot]) === '[object Object]') {
+                        //    ;   
+                        //}
+                    }
+                }
+            }
 		}
+        restorePositions(playerPositions);
+        console.log(playerPositions);
 		io.draw();
 	}
 
@@ -500,9 +530,12 @@ var PokerPlayback = function (io) {
     recordHelper.start = start;
     recordHelper.stop = stop;
     //testPosition();
-
+    start();
   };
 var recordHelper = {
     data : {},
-
+    infoPanl : {},
+    echo : function (msg) {
+        infoPanl.append('<p>'+msg+'</p>')
+    }
 };
