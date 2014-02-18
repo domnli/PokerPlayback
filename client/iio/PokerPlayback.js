@@ -44,8 +44,9 @@ var PokerPlayback = function (io) {
     };*/
     function initTable() {
         recordHelper.echo(record.STAGE.TITLE + '-' + table.TITLE + ' ' + record.STAGE.TIME);
-        recordHelper.echo('庄家位置 ' + table.DEALER);
+        recordHelper.echo('庄家座位号: #' + table.DEALER);
 	    for (i = 0; i < seats.length; i++) {
+            recordHelper.echo('座位#' + seats[i].NUMBER + ':' + seats[i].NAME + '(' + seats[i].CHIPS + ' 筹码)');
 	        (function(pos){
 	            playerPositions[seats[i].NUMBER].icon.obj = new iio.Circle(playerPositions[seats[i].NUMBER].icon, 40)
 	                                        .setStrokeStyle('white',2)
@@ -99,6 +100,10 @@ var PokerPlayback = function (io) {
     
 
     function blindShow() { //盲注展示
+        recordHelper.echo('<br/>');
+        recordHelper.echo('#' + table.SBLIND.NUMBER + ' 小盲注 ' + table.SBLIND.CHIPS);
+        recordHelper.echo('#' + table.BBLIND.NUMBER + ' 大盲注 ' + table.BBLIND.CHIPS);
+        recordHelper.echo('<br/>');
     	playerPositions[table.SBLIND.NUMBER].bet.objBG = new iio.SimpleRect(playerPositions[table.SBLIND.NUMBER].bet.x,playerPositions[table.SBLIND.NUMBER].bet.y - 30,28)
     	                                                    .setAlpha(0)
     	                                                    .fadeIn(.2)
@@ -142,6 +147,9 @@ var PokerPlayback = function (io) {
             holecard = [holecard];
         }
         for (var i = 0; i < holecard.length; i++) {
+            recordHelper.echo('<br/>');
+            recordHelper.echoHolecard(holecard[i]);
+            recordHelper.echo('<br/>');
             (function(pos){
                 var cards = holecard[i].CARD.split(' ');
                 playerPositions[holecard[i].NUMBER].holecard[0].obj = new iio.SimpleRect(playerPositions[holecard[i].NUMBER].holecard[0], 66, 95)
@@ -182,6 +190,7 @@ var PokerPlayback = function (io) {
         var players = pokercard.FLOP.PLAYER, cards = pokercard.FLOP.CARD.split(' '), pot = pokercard.FLOP.POT;
         bubbleClear();
         // 展示三张牌
+        recordHelper.echo('--- 发翻牌 [' + recordHelper.card2str(cards[0]) + recordHelper.card2str(cards[1]) + recordHelper.card2str(cards[2]) + '] ---');
         for (var i = 0; i < cards.length; i++) {
         	(function(pos){
                 boardPositions[i].obj = new iio.SimpleRect(boardPositions[i], 66, 95)
@@ -199,6 +208,7 @@ var PokerPlayback = function (io) {
         var players = pokercard.TURN.PLAYER, card = pokercard.TURN.CARD, pot = pokercard.TURN.POT;
         bubbleClear();
         // 展示第四张牌
+        recordHelper.echo('--- 发转牌 [' + recordHelper.card2str(card) + '] ---');
         boardPositions[3].obj = new iio.SimpleRect(boardPositions[3], 66, 95)
                                         .addImage('res/'+card+'.png', function(){
                                                     io.addToGroup('table',boardPositions[3].obj);
@@ -212,6 +222,7 @@ var PokerPlayback = function (io) {
     	var players = pokercard.RIVER.PLAYER, card = pokercard.RIVER.CARD, pot = pokercard.RIVER.POT;
     	bubbleClear();
     	// 展示第五张牌
+        recordHelper.echo('--- 发河牌 [' + recordHelper.card2str(card) + '] ---');
     	boardPositions[4].obj = new iio.SimpleRect(boardPositions[4], 66, 95)
                                         .addImage('res/'+card+'.png', function(){
                                                     io.addToGroup('table',boardPositions[4].obj);
@@ -224,7 +235,9 @@ var PokerPlayback = function (io) {
     function showDown() {
     	bubbleClear();
     	var players = record.STAGE.SHOWDOWN.PLAYER;
+        recordHelper.echo('--- 亮牌 ---');
     	for (var i = 0; i < players.length; i++) {
+            recordHelper.echoHolecard(players[i]);
     		if (typeof playerPositions[players[i].NUMBER].holecard[0].obj == 'undefined') { // 亮底牌
     			var cards = players[i].CARD.split(' ');
     			(function(pos, cards){
@@ -266,6 +279,12 @@ var PokerPlayback = function (io) {
             }
 
     	};
+        recordHelper.echo('--- 得分 ---');
+        for (var i = 0; i < players.length; i++) {
+            if (typeof players[i].ACTION != 'undefined') {
+                recordHelper.echo(players[i].NAME + '【' + players[i].DESCRP + '】 赢得 ' + players[i].ACTION);
+            }
+        };
     }
 
     function actionStatus(action) { // call 2 to 4 raise 2 to 4 folds
@@ -285,6 +304,7 @@ var PokerPlayback = function (io) {
                 pos = 1;
                 return;
             }
+            recordHelper.echoBet(player);
             var playerPosition = playerPositions[player.NUMBER];
             pos++;
             var action = actionStatus(player.ACTION);
@@ -537,6 +557,58 @@ var recordHelper = {
     data : {},
     infoPanl : {},
     echo : function (msg) {
-       this.infoPanl.append('<p>'+msg+'</p>')
+        this.infoPanl.append('<p>'+msg+'</p>')
+    },
+    card2str : function (card) {
+        var e = card.split(''), type = '', num = '';
+        switch(e[1]) {
+            case 's':
+                type = '黑桃';
+                break;
+            case 'h':
+                type = '红心';
+                break;
+            case 'd':
+                type = '红钻';
+                break;
+            case 'c':
+                type = '黑梅';
+                break;
+        }
+        switch(e[0]) {
+            case 'T':
+                num = '10';
+                break;
+            default :
+                num = e[0];
+                break;
+        }
+        return type + num;
+    },
+    echoHolecard : function (holecard) {
+        var msg = holecard. NAME, cards = holecard.CARD.split(' ');
+        msg += ' 底牌: [' + this.card2str(cards[0]) + ' ' + this.card2str(cards[1]) + ']';
+        this.echo(msg);
+    },
+    echoBet : function (player) {
+        var msg = player.NAME, actions = player.ACTION.toLowerCase().split(' ');
+        switch(actions[0]) {
+            case 'call':
+                msg += ' 跟注 ' + actions[1];
+                break;
+            case 'raise':
+                msg += ' 加注 ' + actions[1];
+                break;
+            case 'allin':
+                msg += ' 全下 ';
+                break;
+            case 'check':
+                msg += ' 看牌 ';
+                break;
+            case 'fold':
+                msg += ' 弃牌 ';
+                break;
+        }
+        this.echo(msg);
     }
 };
