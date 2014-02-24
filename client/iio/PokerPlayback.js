@@ -32,7 +32,7 @@ var PokerPlayback = function (io) {
     if (table.SEATS == 5) {
         playerPositions = playerPositions5;
     }
-    io.setBGImage('res/bg.png');
+    io.setBGImage('res/bg.jpg');
     io.addGroup('table'); //头像、名称、筹码组
     //io.addGroup('dinamic'); //可变物体
     /*for (i = 0; i < playerPositions.length; i++) { //占位背景
@@ -99,7 +99,7 @@ var PokerPlayback = function (io) {
     }
     
 
-    function blindShow() { //盲注展示
+    function blindShow(callback) { //盲注展示
         recordHelper.echo('<br/>');
         recordHelper.echo('#' + table.SBLIND.NUMBER + ' 小盲注 ' + table.SBLIND.CHIPS);
         recordHelper.echo('#' + table.BBLIND.NUMBER + ' 大盲注 ' + table.BBLIND.CHIPS);
@@ -139,9 +139,11 @@ var PokerPlayback = function (io) {
         if (typeof playerPositions[table.SBLIND.NUMBER].chips.obj != 'undefined') {
             playerPositions[table.BBLIND.NUMBER].chips.obj.setText(parseFloat(playerPositions[table.BBLIND.NUMBER].chips.obj.text) - parseFloat(table.BBLIND.CHIPS));
         }
+
+        callback();
     }
 
-    function holecardShow() { //底牌展示
+    function holecardShow(callback) { //底牌展示
         var holecard = pokercard.HOLECARD;
         if (typeof holecard.length == 'undefined') {
             holecard = [holecard];
@@ -178,15 +180,19 @@ var PokerPlayback = function (io) {
         		})(i);
         	}
         };
+
+        callback();
     }
 
-    function preFlopShow() { //preflop阶段下注
+    function preFlopShow(callback) { //preflop阶段下注
         var players = pokercard.PREFLOP.PLAYER;
         bubbleClear();
         bet(players);
+
+        callback();
     }
     
-    function flopShow() { //flop阶段下注
+    function flopShow(callback) { //flop阶段下注
         var players = pokercard.FLOP.PLAYER, cards = pokercard.FLOP.CARD.split(' '), pot = pokercard.FLOP.POT;
         bubbleClear();
         // 展示三张牌
@@ -202,9 +208,11 @@ var PokerPlayback = function (io) {
         // 下注
         bet2pot(pot);
         bet(players);
+
+        callback();
     }
 
-    function turnShow() {
+    function turnShow(callback) {
         var players = pokercard.TURN.PLAYER, card = pokercard.TURN.CARD, pot = pokercard.TURN.POT;
         bubbleClear();
         // 展示第四张牌
@@ -216,9 +224,11 @@ var PokerPlayback = function (io) {
         // 下注
         bet2pot(pot);
         bet(players);
+
+        callback();
     }
 
-    function riverShow() {
+    function riverShow(callback) {
     	var players = pokercard.RIVER.PLAYER, card = pokercard.RIVER.CARD, pot = pokercard.RIVER.POT;
     	bubbleClear();
     	// 展示第五张牌
@@ -230,6 +240,8 @@ var PokerPlayback = function (io) {
     	// 下注
     	bet2pot(pot);
     	bet(players);
+
+        callback();
     }
 
     function showDown() {
@@ -321,7 +333,9 @@ var PokerPlayback = function (io) {
                                                                 .enableUpdates(function(obj,dt,player){
                                                                       if(obj.pos.y < player[1]){
                                                                                obj.pos.y = player[1];
-                                                                               execute(player[0]);
+                                                                               //timeControl(function(){
+                                                                                execute(player[0]);
+                                                                               //},2000);
                                                                       }else if (obj.pos.y > player[1]){
                                                                             obj.pos.y -= .8;
                                                                       }
@@ -334,7 +348,9 @@ var PokerPlayback = function (io) {
                         		            .enableUpdates(function(obj,player){
                                                                   if(obj.pos.y < player[1]){
                                                                            obj.pos.y = player[1];
-                                                                           execute(player[0]);
+                                                                           //timeControl(function(){
+                                                                                execute(player[0]);
+                                                                              // },2000);
                                                                   }else if (obj.pos.y > player[1]){
                                                                         obj.pos.y -= .8;
                                                                   }
@@ -374,7 +390,9 @@ var PokerPlayback = function (io) {
                                                                 .enableUpdates(function(obj,dt,player){
                                                                       if(obj.pos.y < player[1]){
                                                                                obj.pos.y = player[1];
-                                                                               execute(player[0]);
+                                                                               //timeControl(function(){
+                                                                                execute(player[0]);
+                                                                               //},2000);
                                                                       }else if (obj.pos.y > player[1]){
                                                                             obj.pos.y -= .8;
                                                                       }
@@ -387,7 +405,9 @@ var PokerPlayback = function (io) {
                         		            .enableUpdates(function(obj,player){
                                                                   if(obj.pos.y < player[1]){
                                                                            obj.pos.y = player[1];
-                                                                           execute(player[0]);
+                                                                           //timeControl(function(){
+                                                                                execute(player[0]);
+                                                                               //},2000);
                                                                   }else if (obj.pos.y > player[1]){
                                                                         obj.pos.y -= .8;
                                                                   }
@@ -424,7 +444,7 @@ var PokerPlayback = function (io) {
     }
     
    	function start(){
-		initTable();
+		initTable();    
 		setTimeout(blindShow,1000);
 	    setTimeout(holecardShow,2000);
 	    setTimeout(preFlopShow,4000);
@@ -448,7 +468,7 @@ var PokerPlayback = function (io) {
                 if (typeof arr.x != 'undefined' && typeof arr.obj != 'undefined') {
                     console.log('clear',arr);
                     arr.obj = undefined;
-                    if(typeof arr.objBG != 'undefined') {
+                    if(typeof arr.objBG != 'undefined') { 
                         arr.objBG = undefined;
                     }
                 } else {
@@ -468,6 +488,14 @@ var PokerPlayback = function (io) {
 		io.draw();
 	}
 
+    function timer() {
+        var start = new Date().getTime(), addition = 0;
+        return function(fn, during){
+            addition += during;
+            console.log(addition);
+            setTimeout(fn, addition);
+        }
+    }
 
     function testPosition() {
         for (var i = 1; i < playerPositions.length; i++) { // 位置测试
@@ -551,6 +579,7 @@ var PokerPlayback = function (io) {
     recordHelper.start = start;
     recordHelper.stop = stop;
     //testPosition();
+    var timeControl = timer();
     start();
   };
 var recordHelper = {
