@@ -108,6 +108,7 @@ var PokerPlayback = function (io) {
     	                                                    .setAlpha(0)
     	                                                    .fadeIn(.2)
     	                                                    .addImage('res/chips.png',function(){
+                                                                recordHelper.soundPlay('chipThrow');
     	                                                    	io.addToGroup('table',playerPositions[table.SBLIND.NUMBER].bet.objBG);
     	                                                    });
         playerPositions[table.SBLIND.NUMBER].bet.obj = new iio.Text(table.SBLIND.CHIPS, playerPositions[table.SBLIND.NUMBER].bet)
@@ -126,6 +127,7 @@ var PokerPlayback = function (io) {
     	                                                    .setAlpha(0)
     	                                                    .fadeIn(.2)
     	                                                    .addImage('res/chips.png',function(){
+                                                                recordHelper.soundPlay('chipThrow');
     	                                                    	io.addToGroup('table',playerPositions[table.BBLIND.NUMBER].bet.objBG);
     	                                                    });
         playerPositions[table.BBLIND.NUMBER].bet.obj = new iio.Text(table.BBLIND.CHIPS, playerPositions[table.BBLIND.NUMBER].bet)
@@ -201,7 +203,9 @@ var PokerPlayback = function (io) {
         	(function(pos){
                 boardPositions[i].obj = new iio.SimpleRect(boardPositions[i], 66, 95)
                                         .addImage('res/'+cards[i]+'.png', function(){
-                                                    io.addToGroup('table',boardPositions[pos].obj);
+                                                    setTimeout(function(){
+                                                        io.addToGroup('table',boardPositions[pos].obj);
+                                                    },200*pos);
                                                 });
             })(i);
         };
@@ -253,6 +257,7 @@ var PokerPlayback = function (io) {
 
     	var players = record.STAGE.SHOWDOWN.PLAYER;
         recordHelper.echo('--- 亮牌 ---');
+        recordHelper.soundPlay('cardOpen');
     	for (var i = 0; i < players.length; i++) {
             recordHelper.echoHolecard(players[i]);
     		if (typeof playerPositions[players[i].NUMBER].holecard[0].obj == 'undefined') { // 亮底牌
@@ -290,9 +295,13 @@ var PokerPlayback = function (io) {
                                                                      .enableKinematics()
                                                                      .setVel(0,-0.5)
                                                                      .setBound('top',playerPositions[players[i].NUMBER].win.y - 50,function(o){
-                                                                        playerPositions[pos].win.objBG.stopKinematics();
-                                                                        playerPositions[pos].win.obj.stopKinematics();
-                                                                        return true;
+                                                                        //playerPositions[pos].win.objBG.stopKinematics();
+                                                                        //playerPositions[pos].win.obj.stopKinematics();
+                                                                        io.rmvObj(playerPositions[pos].win.objBG);
+                                                                        io.rmvObj(playerPositions[pos].win.obj);
+                                                                        playerPositions[pos].win.obj = undefined;
+                                                                        playerPositions[pos].win.objBG = undefined;
+
                                                                      })
                                                                      .addImage('res/win.png', function(){
                                                                         io.addToGroup('table',playerPositions[pos].win.objBG);
@@ -457,6 +466,7 @@ var PokerPlayback = function (io) {
             case 'raise':
             case 'call':
             case 'allin':
+                    recordHelper.soundPlay('chipThrow');
                     if (typeof playerPosition.bubble.obj == 'undefined') {
                         playerPosition.bubble.obj = new iio.SimpleRect(playerPosition.bubble, 82, 54)
                                                             .setPos(playerPosition.bubble.x,playerPosition.bubble.y + 20)
@@ -535,6 +545,7 @@ var PokerPlayback = function (io) {
                     }
 
                     if(action.status == 'folds') {
+                        recordHelper.soundPlay('playerFold');
                         (function(pos){
                             playerPosition.icon.objBG = new iio.Circle(playerPosition.icon, 40)
                                             .setStrokeStyle('white',2)
@@ -542,6 +553,8 @@ var PokerPlayback = function (io) {
                                                                     io.addToGroup('table',playerPositions[pos].icon.objBG);
                                                                 }); // 头像
                         })(player.NUMBER);
+                    }else{
+                        recordHelper.soundPlay('playerCheck');
                     }
                 break;
         }
@@ -800,6 +813,26 @@ var recordHelper = {
                 break;
         }
         this.echo(msg);
+    },
+    sounds : {cardOpen:null,chipThrow:null,playerCheck:null,playerFold:null},
+    soundLoad : function () {
+        var that = this;
+        function loadSound (o, u) {
+            that.sounds[o] = new Audio();
+            that.sounds[o].src = u;
+            that.sounds[o].load();
+            that.sounds[o].addEventListener("canplaythrough",
+                function() { that.sounds[o].loaded = true; }, false);
+        }
+        loadSound('cardOpen','res/audio/card_open.wav');
+        loadSound('chipThrow','res/audio/chip_throw.wav');
+        loadSound('playerCheck','res/audio/player_check.wav');
+        loadSound('playerFold','res/audio/player_fold.wav');
+    },
+    soundPlay : function (flag) {
+        if(this.sounds[flag].loaded){
+            this.sounds[flag].play();
+        }
     }
 };
 

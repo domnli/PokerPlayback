@@ -5,7 +5,7 @@
 	<meta name="viewport" content="target-densitydpi=device-dpi, width=640px, user-scalable=no" />
 	<title>PokerPlayback</title>
 	<script src="iio/core/iioEngine.js"></script>
-	<script src="iio/PokerPlayback.min.js"></script>
+	<script src="iio/PokerPlayback.js"></script>
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 </head>
 <style type="text/css">
@@ -27,7 +27,7 @@
 	<div id ="infoPanl" style="width:620px;background-color:#aabfc3;text-align:left;padding:10px"></div>
 </body>
 <script type="text/javascript">
-	$.getJSON('/poker/server/poker.php',function(data){
+	$.getJSON('/server/poker.php',function(data){
 		recordHelper.data = data;
 		recordHelper.infoPanl = $('#infoPanl');
 		recordHelper.interval.blindShow = 2000;
@@ -38,6 +38,7 @@
         recordHelper.interval.riverShow = 2000;
         recordHelper.interval.showDown = 2000;
         recordHelper.interval.bet = 3000;
+        recordHelper.soundLoad();
 		iio.start(PokerPlayback,'pokerPanl');
 	});
 
@@ -53,6 +54,7 @@
 			$('#btnPause').show();
 		});
 		$('#btnReplay').click(function(){
+			$('#infoPanl').html('');
 			recordHelper.replay();
 		});
 	});
