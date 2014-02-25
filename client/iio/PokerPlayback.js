@@ -2,23 +2,23 @@
 var PokerPlayback = function (io) {
     var playerPositions = [
         {},
-        {name : {x : 320, y : 800}, icon : {x : 320, y : 870}, chips : {x : 320, y : 940}, dealer : {x : 380, y : 840}, blind : {x : 340, y : 680}, bet : {x : 320, y : 760}, holecard : [{x : 295, y : 870}, {x : 336, y : 870}], bubble : {x : 320, y : 800}},
-        {name : {x : 60, y : 620}, icon : {x : 60, y : 690}, chips : {x : 60, y : 760}, dealer : {x : 120, y : 660}, blind : {x : 130, y : 630}, bet : {x : 140, y : 720}, holecard : [{x : 38, y : 700}, {x : 80, y : 700}], bubble : {x : 60, y : 620}},
-        {name : {x : 60, y : 410}, icon : {x : 60, y : 480}, chips : {x : 60, y : 550}, dealer : {x : 120, y : 450}, blind : {x : 130, y : 430}, bet : {x : 140, y : 510}, holecard : [{x : 38, y : 480}, {x : 80, y : 480}], bubble : {x : 60, y : 410}},
-        {name : {x : 60, y : 200}, icon : {x : 60, y : 270}, chips : {x : 60, y : 340}, dealer : {x : 120, y : 240}, blind : {x : 130, y : 230}, bet : {x : 140, y : 300}, holecard : [{x : 38, y : 270}, {x : 80, y : 270}], bubble : {x : 60, y : 200}},
-        {name : {x : 220, y : 20}, icon : {x : 220, y : 90}, chips : {x : 220, y : 160}, dealer : {x : 280, y : 55}, blind : {x : 240, y : 150}, bet : {x : 220, y : 220}, holecard : [{x : 193, y : 90}, {x : 236, y : 90}], bubble : {x : 220, y : 20}},
-        {name : {x : 420, y : 20}, icon : {x : 420, y : 90}, chips : {x : 420, y : 160}, dealer : {x : 480, y : 55}, blind : {x : 400, y : 150}, bet : {x : 420, y : 220}, holecard : [{x : 394, y : 90}, {x : 436, y : 90}], bubble : {x : 420, y : 20}},
-        {name : {x : 580, y : 200}, icon : {x : 580, y : 270}, chips : {x : 580, y : 340}, dealer : {x : 520, y : 240}, blind : {x : 510, y : 230}, bet : {x : 500, y : 300}, holecard : [{x : 560, y : 270}, {x : 605, y : 270}], bubble : {x : 580, y : 200}},
-        {name : {x : 580, y : 410}, icon : {x : 580, y : 480}, chips : {x : 580, y : 550}, dealer : {x : 520, y : 450}, blind : {x : 510, y : 430}, bet : {x : 500, y : 510}, holecard : [{x : 560, y : 480}, {x : 605, y : 480}], bubble : {x : 580, y : 410}},
-        {name : {x : 580, y : 620}, icon : {x : 580, y : 690}, chips : {x : 580, y : 760}, dealer : {x : 520, y : 660}, blind : {x : 510, y : 630}, bet : {x : 500, y : 720}, holecard : [{x : 560, y : 700}, {x : 605, y : 700}], bubble : {x : 580, y : 620}}
+        {name : {x : 320, y : 800}, icon : {x : 320, y : 870}, chips : {x : 320, y : 940}, dealer : {x : 380, y : 840}, blind : {x : 340, y : 680}, bet : {x : 320, y : 760}, holecard : [{x : 295, y : 870}, {x : 336, y : 870}], bubble : {x : 320, y : 800},win : {x : 320, y : 800}},
+        {name : {x : 60, y : 620}, icon : {x : 60, y : 690}, chips : {x : 60, y : 760}, dealer : {x : 120, y : 660}, blind : {x : 130, y : 630}, bet : {x : 140, y : 720}, holecard : [{x : 38, y : 700}, {x : 80, y : 700}], bubble : {x : 60, y : 620},win : {x : 60, y : 620}},
+        {name : {x : 60, y : 410}, icon : {x : 60, y : 480}, chips : {x : 60, y : 550}, dealer : {x : 120, y : 450}, blind : {x : 130, y : 430}, bet : {x : 140, y : 510}, holecard : [{x : 38, y : 480}, {x : 80, y : 480}], bubble : {x : 60, y : 410},win : {x : 60, y : 410}},
+        {name : {x : 60, y : 200}, icon : {x : 60, y : 270}, chips : {x : 60, y : 340}, dealer : {x : 120, y : 240}, blind : {x : 130, y : 230}, bet : {x : 140, y : 300}, holecard : [{x : 38, y : 270}, {x : 80, y : 270}], bubble : {x : 60, y : 200},win : {x : 60, y : 200}},
+        {name : {x : 220, y : 20}, icon : {x : 220, y : 90}, chips : {x : 220, y : 160}, dealer : {x : 280, y : 55}, blind : {x : 240, y : 150}, bet : {x : 220, y : 220}, holecard : [{x : 193, y : 90}, {x : 236, y : 90}], bubble : {x : 220, y : 20},win : {x : 220, y : 20}},
+        {name : {x : 420, y : 20}, icon : {x : 420, y : 90}, chips : {x : 420, y : 160}, dealer : {x : 480, y : 55}, blind : {x : 400, y : 150}, bet : {x : 420, y : 220}, holecard : [{x : 394, y : 90}, {x : 436, y : 90}], bubble : {x : 420, y : 20},win : {x : 420, y : 20}},
+        {name : {x : 580, y : 200}, icon : {x : 580, y : 270}, chips : {x : 580, y : 340}, dealer : {x : 520, y : 240}, blind : {x : 510, y : 230}, bet : {x : 500, y : 300}, holecard : [{x : 560, y : 270}, {x : 605, y : 270}], bubble : {x : 580, y : 200},win : {x : 580, y : 200}},
+        {name : {x : 580, y : 410}, icon : {x : 580, y : 480}, chips : {x : 580, y : 550}, dealer : {x : 520, y : 450}, blind : {x : 510, y : 430}, bet : {x : 500, y : 510}, holecard : [{x : 560, y : 480}, {x : 605, y : 480}], bubble : {x : 580, y : 410},win : {x : 580, y : 410}},
+        {name : {x : 580, y : 620}, icon : {x : 580, y : 690}, chips : {x : 580, y : 760}, dealer : {x : 520, y : 660}, blind : {x : 510, y : 630}, bet : {x : 500, y : 720}, holecard : [{x : 560, y : 700}, {x : 605, y : 700}], bubble : {x : 580, y : 620},win : {x : 580, y : 620}}
       ],
       playerPositions5 = [
         {},
-        {name : {x : 320, y : 800}, icon : {x : 320, y : 870}, chips : {x : 320, y : 940}, dealer : {x : 380, y : 840}, blind : {x : 340, y : 680}, bet : {x : 320, y : 760}, holecard : [{x : 295, y : 870}, {x : 336, y : 870}], bubble : {x : 320, y : 800}},
-        {name : {x : 60, y : 620}, icon : {x : 60, y : 690}, chips : {x : 60, y : 760}, dealer : {x : 120, y : 660}, blind : {x : 130, y : 630}, bet : {x : 140, y : 720}, holecard : [{x : 38, y : 700}, {x : 80, y : 700}], bubble : {x : 60, y : 620}},
-        {name : {x : 60, y : 200}, icon : {x : 60, y : 270}, chips : {x : 60, y : 340}, dealer : {x : 120, y : 240}, blind : {x : 130, y : 230}, bet : {x : 140, y : 300}, holecard : [{x : 38, y : 270}, {x : 80, y : 270}], bubble : {x : 60, y : 200}},
-        {name : {x : 580, y : 200}, icon : {x : 580, y : 270}, chips : {x : 580, y : 340}, dealer : {x : 520, y : 240}, blind : {x : 510, y : 230}, bet : {x : 500, y : 300}, holecard : [{x : 560, y : 270}, {x : 605, y : 270}], bubble : {x : 580, y : 200}},
-        {name : {x : 580, y : 620}, icon : {x : 580, y : 690}, chips : {x : 580, y : 760}, dealer : {x : 520, y : 660}, blind : {x : 510, y : 630}, bet : {x : 500, y : 720}, holecard : [{x : 560, y : 700}, {x : 605, y : 700}], bubble : {x : 580, y : 620}}
+        {name : {x : 320, y : 800}, icon : {x : 320, y : 870}, chips : {x : 320, y : 940}, dealer : {x : 380, y : 840}, blind : {x : 340, y : 680}, bet : {x : 320, y : 760}, holecard : [{x : 295, y : 870}, {x : 336, y : 870}], bubble : {x : 320, y : 800}, win : {x : 320, y : 800}},
+        {name : {x : 60, y : 620}, icon : {x : 60, y : 690}, chips : {x : 60, y : 760}, dealer : {x : 120, y : 660}, blind : {x : 130, y : 630}, bet : {x : 140, y : 720}, holecard : [{x : 38, y : 700}, {x : 80, y : 700}], bubble : {x : 60, y : 620}, win : {x : 60, y : 620}},
+        {name : {x : 60, y : 200}, icon : {x : 60, y : 270}, chips : {x : 60, y : 340}, dealer : {x : 120, y : 240}, blind : {x : 130, y : 230}, bet : {x : 140, y : 300}, holecard : [{x : 38, y : 270}, {x : 80, y : 270}], bubble : {x : 60, y : 200}, win : {x : 60, y : 200}},
+        {name : {x : 580, y : 200}, icon : {x : 580, y : 270}, chips : {x : 580, y : 340}, dealer : {x : 520, y : 240}, blind : {x : 510, y : 230}, bet : {x : 500, y : 300}, holecard : [{x : 560, y : 270}, {x : 605, y : 270}], bubble : {x : 580, y : 200}, win : {x : 580, y : 200}},
+        {name : {x : 580, y : 620}, icon : {x : 580, y : 690}, chips : {x : 580, y : 760}, dealer : {x : 520, y : 660}, blind : {x : 510, y : 630}, bet : {x : 500, y : 720}, holecard : [{x : 560, y : 700}, {x : 605, y : 700}], bubble : {x : 580, y : 620}, win : {x : 580, y : 620}},
       ],
       potPosition = {x : 325, y : 350},
       boardPositions = [
@@ -140,7 +140,7 @@ var PokerPlayback = function (io) {
             playerPositions[table.BBLIND.NUMBER].chips.obj.setText(parseFloat(playerPositions[table.BBLIND.NUMBER].chips.obj.text) - parseFloat(table.BBLIND.CHIPS));
         }
 
-        callback();
+        if(callback){callback();}
     }
 
     function holecardShow(callback) { //底牌展示
@@ -181,15 +181,15 @@ var PokerPlayback = function (io) {
         	}
         };
 
-        callback();
+        if(callback){callback();}
     }
 
     function preFlopShow(callback) { //preflop阶段下注
         var players = pokercard.PREFLOP.PLAYER;
         bubbleClear();
-        bet(players);
+        //bet(players);
 
-        callback();
+        if(callback){callback();}
     }
     
     function flopShow(callback) { //flop阶段下注
@@ -207,9 +207,9 @@ var PokerPlayback = function (io) {
         };
         // 下注
         bet2pot(pot);
-        bet(players);
+        //bet(players);
 
-        callback();
+        if(callback){callback();}
     }
 
     function turnShow(callback) {
@@ -223,9 +223,9 @@ var PokerPlayback = function (io) {
                                                 });
         // 下注
         bet2pot(pot);
-        bet(players);
+        //bet(players);
 
-        callback();
+        if(callback){callback();}
     }
 
     function riverShow(callback) {
@@ -239,9 +239,9 @@ var PokerPlayback = function (io) {
                                                 });
     	// 下注
     	bet2pot(pot);
-    	bet(players);
+    	//bet(players);
 
-        callback();
+        if(callback){callback();}
     }
 
     function showDown() {
@@ -280,14 +280,31 @@ var PokerPlayback = function (io) {
 	        io.addToGroup('table',playerPositions[players[i].NUMBER].chips.obj);
     		// 展示所赢筹码
             if (typeof players[i].ACTION != 'undefined') {
-                playerPositions[players[i].NUMBER].bubble.objBG = new iio.SimpleRect(playerPositions[players[i].NUMBER].bubble.x, playerPositions[players[i].NUMBER].bubble.y - 5, 80, 20)
-                                                                     .setFillStyle('red');
-                io.addToGroup('table',playerPositions[players[i].NUMBER].bubble.objBG);
-                playerPositions[players[i].NUMBER].bubble.obj = new iio.Text(players[i].ACTION, playerPositions[players[i].NUMBER].bubble)
+                (function(pos){
+                    playerPositions[players[i].NUMBER].win.objBG = new iio.SimpleRect(playerPositions[players[i].NUMBER].win.x, playerPositions[players[i].NUMBER].win.y + 50, 108, 61)
+                                                                     .enableKinematics()
+                                                                     .setVel(0,-0.5)
+                                                                     .setBound('top',playerPositions[players[i].NUMBER].win.y - 50,function(o){
+                                                                        playerPositions[pos].win.objBG.stopKinematics();
+                                                                        playerPositions[pos].win.obj.stopKinematics();
+                                                                        return true;
+                                                                     })
+                                                                     .addImage('res/win.png', function(){
+                                                                        io.addToGroup('table',playerPositions[pos].win.objBG);
+                                                                        io.addToGroup('table',playerPositions[pos].win.obj);
+                                                                     });
+                    //筹码位置加皇冠
+                    playerPositions[players[i].NUMBER].bet.objBG.addImage('res/crown.png',function(){
+                        playerPositions[pos].bet.objBG.width = 56;
+                        playerPositions[pos].bet.objBG.height = 46;
+                    });
+                })(players[i].NUMBER);
+                playerPositions[players[i].NUMBER].win.obj = new iio.Text(players[i].ACTION, playerPositions[players[i].NUMBER].win.x, playerPositions[players[i].NUMBER].win.y + 65)
+                                                                   .enableKinematics()
+                                                                   .setVel(0,-0.5)
                                                                    .setFont('16px Microsoft YaHei')
                                                                    .setTextAlign('center')
                                                                    .setFillStyle('white');
-                io.addToGroup('table',playerPositions[players[i].NUMBER].bubble.obj);
             }
 
     	};
@@ -310,7 +327,8 @@ var PokerPlayback = function (io) {
     }
 
     function bet(players) { //玩家下注
-        var pos = 0;
+        /*var pos = 0;
+
         function execute(player) {
             if (typeof player == 'undefined') {
                 pos = 1;
@@ -418,8 +436,113 @@ var PokerPlayback = function (io) {
             }
             
         }
-        execute(players[0]);
+        execute(players[0]);*/
+
+        for (var i = 0; i < players.length; i++) {
+            var player = players[i];//{NUMBER : players[i].NUMBER, NAME : players[i].NAME, ACTION : players[i].ACTION};
+            timeControl.add({fn:execute,param:player,during : recordHelper.interval.bet});
+        };
     }
+
+    function execute(player) {
+        recordHelper.echoBet(player);
+        var playerPosition = playerPositions[player.NUMBER];
+        var action = actionStatus(player.ACTION);
+        switch(action.status) {
+            case 'raise':
+            case 'call':
+            case 'allin':
+                    if (typeof playerPosition.bubble.obj == 'undefined') {
+                        playerPosition.bubble.obj = new iio.SimpleRect(playerPosition.bubble, 82, 54)
+                                                            .setPos(playerPosition.bubble.x,playerPosition.bubble.y + 20)
+                                                            .addImage('res/'+action.status+'.png',function(){
+                                                                io.addToGroup('table',playerPosition.bubble.obj);
+                                                            })
+                                                            .enableUpdates(function(obj,dt,player){
+                                                                  if(obj.pos.y < player[1]){
+                                                                           obj.pos.y = player[1];
+                                                                  }else if (obj.pos.y > player[1]){
+                                                                        obj.pos.y -= .8;
+                                                                  }
+                                                                  return true;
+                                                            },[0,playerPosition.bubble.y]); // 气泡
+                    } else{
+                        playerPosition.bubble.obj
+                                        .addImage('res/'+action.status+'.png')
+                                        .setPos(playerPosition.bubble.x,playerPosition.bubble.y + 20)
+                                        .enableUpdates(function(obj,player){
+                                                              if(obj.pos.y < player[1]){
+                                                                       obj.pos.y = player[1];
+                                                              }else if (obj.pos.y > player[1]){
+                                                                    obj.pos.y -= .8;
+                                                              }
+                                                              return true;
+                                                        },[0,playerPosition.bubble.y]);
+                    }
+                    
+                    // plus bet
+                    if (typeof playerPosition.bet.obj == 'undefined') {
+                        playerPosition.bet.objBG = new iio.SimpleRect(playerPosition.bet.x,playerPosition.bet.y - 30,28)
+                                                        .addImage('res/chips.png',function(){
+                                                            io.addToGroup('table',playerPosition.bet.objBG);
+                                                        });
+                        playerPosition.bet.obj = new iio.Text(action.money, playerPosition.bet)
+                                                    .setFont('16px Microsoft YaHei')
+                                                    .setTextAlign('center')
+                                                    .setFillStyle('white');
+                        io.addToGroup('table', playerPosition.bet.obj);
+                    } else {
+                        playerPosition.bet.obj.setText(parseFloat(playerPosition.bet.obj.text) + parseFloat(action.money));
+                    }
+                    // minus chips
+                    if (typeof playerPosition.chips.obj != 'undefined') {
+                        playerPosition.chips.obj.setText(parseFloat(playerPosition.chips.obj.text) - parseFloat(action.money));
+                    }
+                break;
+            case 'check':
+            case 'folds':
+                if (typeof playerPosition.bubble.obj == 'undefined') {
+                        playerPosition.bubble.obj = new iio.SimpleRect(playerPosition.bubble, 82, 54)
+                                                            .setPos(playerPosition.bubble.x,playerPosition.bubble.y + 20)
+                                                            .addImage('res/'+action.status+'.png',function(){
+                                                                io.addToGroup('table',playerPosition.bubble.obj);
+                                                            })
+                                                            .enableUpdates(function(obj,dt,player){
+                                                                  if(obj.pos.y < player[1]){
+                                                                           obj.pos.y = player[1];
+                                                                  }else if (obj.pos.y > player[1]){
+                                                                        obj.pos.y -= .8;
+                                                                  }
+                                                                  return true;
+                                                            },[0,playerPosition.bubble.y]); // 气泡
+                    } else{
+                        playerPosition.bubble.obj
+                                        .addImage('res/'+action.status+'.png')
+                                        .setPos(playerPosition.bubble.x,playerPosition.bubble.y + 20)
+                                        .enableUpdates(function(obj,player){
+                                                              if(obj.pos.y < player[1]){
+                                                                       obj.pos.y = player[1];
+                                                              }else if (obj.pos.y > player[1]){
+                                                                    obj.pos.y -= .8;
+                                                              }
+                                                              return true;
+                                                        },[0,playerPosition.bubble.y]);
+                    }
+
+                    if(action.status == 'folds') {
+                        (function(pos){
+                            playerPosition.icon.objBG = new iio.Circle(playerPosition.icon, 40)
+                                            .setStrokeStyle('white',2)
+                                            .addImage('res/fold.png', function(){
+                                                                    io.addToGroup('table',playerPositions[pos].icon.objBG);
+                                                                }); // 头像
+                        })(player.NUMBER);
+                    }
+                break;
+        }
+        
+    }
+
     function bubbleClear() { //清空气泡
     	for (var i = 0; i < seats.length; i++) {
     		if (typeof playerPositions[seats[i].NUMBER].bubble.obj != 'undefined') {
@@ -428,6 +551,7 @@ var PokerPlayback = function (io) {
     		}
     	};
     }
+
     function bet2pot(given) { //收集玩家下注到奖池
         var pot = parseFloat(potPosition.obj.text);
         for (var i = 0; i < seats.length; i++) {
@@ -444,19 +568,36 @@ var PokerPlayback = function (io) {
     }
     
    	function start(){
-		initTable();    
-		setTimeout(blindShow,1000);
+		initTable();
+        timeControl.add({fn:blindShow,during:recordHelper.interval.blindShow});
+        timeControl.add({fn:holecardShow,during:recordHelper.interval.holecardShow});
+        timeControl.add({fn:preFlopShow,during:recordHelper.interval.preFlopShow}, function(){
+            bet(pokercard.PREFLOP.PLAYER);
+        });
+        timeControl.add({fn:flopShow,during:recordHelper.interval.flopShow}, function(){
+            bet(pokercard.FLOP.PLAYER);
+        });
+        timeControl.add({fn:turnShow,during:recordHelper.interval.turnShow}, function(){
+            bet(pokercard.TURN.PLAYER);
+        });
+        timeControl.add({fn:riverShow,during:recordHelper.interval.riverShow}, function(){
+            bet(pokercard.RIVER.PLAYER);
+        });
+        timeControl.add({fn:showDown,during:recordHelper.interval.showDown});
+        timeControl.next();
+		/*setTimeout(blindShow,1000);
 	    setTimeout(holecardShow,2000);
 	    setTimeout(preFlopShow,4000);
 	    setTimeout(flopShow,7000);
 	    setTimeout(turnShow,10000);
 	    setTimeout(riverShow,13000);
-	    setTimeout(showDown,16000);
+	    setTimeout(showDown,16000);*/
 	}
+
 	function stop(){
 		io.rmvAll();
 		function restorePositions(arr){
-			// TODO 遍历playerPositions 设置 .obj = undefined;
+			// 遍历playerPositions 设置 .obj = undefined;
             if (Object.prototype.toString.call(arr) === '[object Array]') {
                 for (var i = 0; i < arr.length; i++) {
                     console.log('array',arr[i]);
@@ -488,16 +629,15 @@ var PokerPlayback = function (io) {
 		io.draw();
 	}
 
-    function timer() {
-        var start = new Date().getTime(), addition = 0;
-        return function(fn, during){
-            addition += during;
-            console.log(addition);
-            setTimeout(fn, addition);
+    function replay() {
+        if(timeControl._queue.length == 0) {
+            stop();
+            start();
         }
     }
 
-    function testPosition() {
+
+    /*function testPosition() {
         for (var i = 1; i < playerPositions.length; i++) { // 位置测试
             (function(pos){
                 playerPositions[i].icon.obj = new iio.Circle(playerPositions[i].icon, 40)
@@ -565,10 +705,11 @@ var PokerPlayback = function (io) {
 			                                            });
 			        })(i);
 			    };
-    }
+    }*/
+
     io.setFramerate(60);
-    recordHelper.io = io;
-/*    recordHelper.testPosition = testPosition;
+/*    recordHelper.io = io;
+    recordHelper.testPosition = testPosition;
     recordHelper.blind = blindShow;
     recordHelper.holecard = holecardShow;
     recordHelper.pre = preFlopShow;
@@ -576,14 +717,29 @@ var PokerPlayback = function (io) {
     recordHelper.flop = flopShow;
     recordHelper.turn = turnShow;
     recordHelper.river = riverShow;*/
+    var timeControl = new Timer();
     recordHelper.start = start;
     recordHelper.stop = stop;
+    recordHelper.replay = replay;
+    recordHelper.pause = function(){
+        timeControl.pause();   
+    };
     //testPosition();
-    var timeControl = timer();
     start();
   };
+
 var recordHelper = {
     data : {},
+    interval : {
+        blindShow : 5000,
+        holecardShow : 5000,
+        preFlopShow : 5000,
+        flopShow : 5000,
+        turnShow : 5000,
+        riverShow : 5000,
+        showDown : 5000,
+        bet : 2000
+    },
     infoPanl : {},
     echo : function (msg) {
         this.infoPanl.append('<p>'+msg+'</p>')
@@ -641,3 +797,32 @@ var recordHelper = {
         this.echo(msg);
     }
 };
+
+var Timer = function(){
+    this._queue = [];
+    this._pause = false;
+}
+Timer.prototype.pause = function(){
+    if(this._pause){
+        this._pause = false;
+        this.next(0);
+    }else{
+        this._pause = true;
+    }
+}
+Timer.prototype.add = function(action,callback){
+    // TODO 验证action包含action.fn(Function)和action.during(ms Int)
+    this._queue.push(action);
+    if(callback){callback();}
+}
+Timer.prototype.next = function(dur){
+    var act = this._queue.shift(), that = this;
+    if(act && act.fn && act.during){
+        setTimeout(function(){
+            act.fn.call(null,act.param);
+            if(!that._pause){
+                that.next();
+            }
+        },isNaN(dur)?act.during:dur);
+    }
+}

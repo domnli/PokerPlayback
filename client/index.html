@@ -8,15 +8,53 @@
 	<script src="iio/PokerPlayback.js"></script>
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 </head>
+<style type="text/css">
+	button{outline:none;}
+	button.pause{width:150px;height:96px;border-style:none;background:url(res/pause.png)}
+	button.pause:active{background:url(res/pause_pressed.png);}
+	button.play{width:150px;height:96px;border-style:none;background:url(res/play.png)}
+	button.play:active{background:url(res/play_pressed.png);}
+	button.replay{width:150px;height:96px;border-style:none;background:url(res/replay.png)}
+	button.replay:active{background:url(res/replay_pressed.png);}
+</style>
 <body style="background-color:rgb(105, 200, 245);margin:0">
 	<canvas id="pokerPanl" width="640px" height="960px"></canvas>
+	<div style="width:640px;height:96px;background:url(res/toolbar.jpg);text-align:center">
+		<button id="btnPause" class="pause"></button>
+		<button id="btnPlay" class="play" style="display:none"></button>
+		<button id="btnReplay" class="replay"></button>
+	</div>
 	<div id ="infoPanl" style="width:620px;background-color:#aabfc3;text-align:left;padding:10px"></div>
 </body>
 <script type="text/javascript">
-	$.getJSON('/server/poker.php',function(data){
+	$.getJSON('/poker/server/poker.php',function(data){
 		recordHelper.data = data;
 		recordHelper.infoPanl = $('#infoPanl');
+		recordHelper.interval.blindShow = 1000;
+        recordHelper.interval.holecardShow = 1000;
+        recordHelper.interval.preFlopShow = 1000;
+        recordHelper.interval.flopShow = 1000;
+        recordHelper.interval.turnShow = 1000;
+        recordHelper.interval.riverShow = 1000;
+        recordHelper.interval.showDown = 1000;
+        recordHelper.interval.bet = 300;
 		iio.start(PokerPlayback,'pokerPanl');
+	});
+
+	$(function(){
+		$('#btnPause').click(function(){
+			recordHelper.pause();
+			$(this).hide();
+			$('#btnPlay').show();
+		});
+		$('#btnPlay').click(function(){
+			recordHelper.pause();
+			$(this).hide();
+			$('#btnPause').show();
+		});
+		$('#btnReplay').click(function(){
+			recordHelper.replay();
+		});
 	});
 </script>
 </html>
