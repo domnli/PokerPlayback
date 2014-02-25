@@ -246,6 +246,11 @@ var PokerPlayback = function (io) {
 
     function showDown() {
     	bubbleClear();
+        //bet2pot();
+        //清空奖池
+        io.rmvObj(potPosition.obj);
+        potPosition.obj = undefined;
+
     	var players = record.STAGE.SHOWDOWN.PLAYER;
         recordHelper.echo('--- 亮牌 ---');
     	for (var i = 0; i < players.length; i++) {
