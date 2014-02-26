@@ -88,5 +88,5 @@ class Poker {
 	}
 }
 
-$poker = new Poker('handhistory.xml');
+$poker = new Poker('handhistory2.xml');
 echo $poker->exportJSON();

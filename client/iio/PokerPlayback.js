@@ -64,10 +64,11 @@ var PokerPlayback = function (io) {
 	                                        .setFillStyle('black')
 	                                        .setAlpha(.3); // 筹码背景
 	        io.addToGroup('table', playerPositions[seats[i].NUMBER].chips.objBG);
-	        playerPositions[seats[i].NUMBER].chips.obj = new iio.Text(seats[i].CHIPS, playerPositions[seats[i].NUMBER].chips)
+	        playerPositions[seats[i].NUMBER].chips.obj = new iio.Text(recordHelper.chipsFormat(seats[i].CHIPS), playerPositions[seats[i].NUMBER].chips)
 	                                    .setFont('16px Microsoft YaHei')
 	                                    .setTextAlign('center')
 	                                    .setFillStyle('white'); // 筹码
+            playerPositions[seats[i].NUMBER].chips.obj.chips = seats[i].CHIPS;
 	        io.addToGroup('table', playerPositions[seats[i].NUMBER].chips.obj);
 	    };
 
@@ -95,6 +96,7 @@ var PokerPlayback = function (io) {
 	                            .setFont('20px Microsoft YaHei')
 	                            .setTextAlign('center')
 	                            .setFillStyle('white'); // 奖池
+        potPosition.obj.chips = 0;
 	    io.addToGroup('table', potPosition.obj);
     }
     
@@ -111,16 +113,19 @@ var PokerPlayback = function (io) {
                                                                 recordHelper.soundPlay('chipThrow');
     	                                                    	io.addToGroup('table',playerPositions[table.SBLIND.NUMBER].bet.objBG);
     	                                                    });
-        playerPositions[table.SBLIND.NUMBER].bet.obj = new iio.Text(table.SBLIND.CHIPS, playerPositions[table.SBLIND.NUMBER].bet)
+        playerPositions[table.SBLIND.NUMBER].bet.obj = new iio.Text(recordHelper.chipsFormat(table.SBLIND.CHIPS), playerPositions[table.SBLIND.NUMBER].bet)
                                                 .setFont('16px Microsoft YaHei')
                                                 .setTextAlign('center')
                                                 .setFillStyle('white')
                                                 .setAlpha(0)
                                                 .fadeIn(.2); // 小盲注
+        playerPositions[table.SBLIND.NUMBER].bet.obj.chips = table.SBLIND.CHIPS;
         io.addToGroup('table', playerPositions[table.SBLIND.NUMBER].bet.obj);
         // minus chips
         if (typeof playerPositions[table.SBLIND.NUMBER].chips.obj != 'undefined') {
-            playerPositions[table.SBLIND.NUMBER].chips.obj.setText(parseFloat(playerPositions[table.SBLIND.NUMBER].chips.obj.text) - parseFloat(table.SBLIND.CHIPS));
+            var sblind = parseFloat(playerPositions[table.SBLIND.NUMBER].chips.obj.chips) - parseFloat(table.SBLIND.CHIPS);
+            playerPositions[table.SBLIND.NUMBER].chips.obj.chips = sblind;
+            playerPositions[table.SBLIND.NUMBER].chips.obj.setText(recordHelper.chipsFormat(sblind));
         }
 
         playerPositions[table.BBLIND.NUMBER].bet.objBG = new iio.SimpleRect(playerPositions[table.BBLIND.NUMBER].bet.x,playerPositions[table.BBLIND.NUMBER].bet.y - 30,28)
@@ -130,16 +135,19 @@ var PokerPlayback = function (io) {
                                                                 recordHelper.soundPlay('chipThrow');
     	                                                    	io.addToGroup('table',playerPositions[table.BBLIND.NUMBER].bet.objBG);
     	                                                    });
-        playerPositions[table.BBLIND.NUMBER].bet.obj = new iio.Text(table.BBLIND.CHIPS, playerPositions[table.BBLIND.NUMBER].bet)
+        playerPositions[table.BBLIND.NUMBER].bet.obj = new iio.Text(recordHelper.chipsFormat(table.BBLIND.CHIPS), playerPositions[table.BBLIND.NUMBER].bet)
                                                 .setFont('16px Microsoft YaHei')
                                                 .setTextAlign('center')
                                                 .setFillStyle('white')
                                                 .setAlpha(0)
                                                 .fadeIn(.2); // 大盲注
+        playerPositions[table.BBLIND.NUMBER].bet.obj.chips = table.BBLIND.CHIPS;
         io.addToGroup('table', playerPositions[table.BBLIND.NUMBER].bet.obj);
         // minus chips
         if (typeof playerPositions[table.SBLIND.NUMBER].chips.obj != 'undefined') {
-            playerPositions[table.BBLIND.NUMBER].chips.obj.setText(parseFloat(playerPositions[table.BBLIND.NUMBER].chips.obj.text) - parseFloat(table.BBLIND.CHIPS));
+            var bblind = parseFloat(playerPositions[table.BBLIND.NUMBER].chips.obj.chips) - parseFloat(table.BBLIND.CHIPS);
+            playerPositions[table.BBLIND.NUMBER].chips.obj.chips = bblind;
+            playerPositions[table.BBLIND.NUMBER].chips.obj.setText(recordHelper.chipsFormat(bblind));
         }
 
         if(callback){callback();}
@@ -250,10 +258,7 @@ var PokerPlayback = function (io) {
 
     function showDown() {
     	bubbleClear();
-        //bet2pot();
-        //清空奖池
-        io.rmvObj(potPosition.obj);
-        potPosition.obj = undefined;
+        bet2pot();
 
     	var players = record.STAGE.SHOWDOWN.PLAYER;
         recordHelper.echo('--- 亮牌 ---');
@@ -295,31 +300,43 @@ var PokerPlayback = function (io) {
                                                                      .enableKinematics()
                                                                      .setVel(0,-0.5)
                                                                      .setBound('top',playerPositions[players[i].NUMBER].win.y - 50,function(o){
-                                                                        //playerPositions[pos].win.objBG.stopKinematics();
-                                                                        //playerPositions[pos].win.obj.stopKinematics();
-                                                                        io.rmvObj(playerPositions[pos].win.objBG);
-                                                                        io.rmvObj(playerPositions[pos].win.obj);
-                                                                        playerPositions[pos].win.obj = undefined;
-                                                                        playerPositions[pos].win.objBG = undefined;
+                                                                        // playerPositions[pos].win.objBG.stopKinematics();
+                                                                        // playerPositions[pos].win.obj.stopKinematics();
+                                                                        // io.rmvObj(playerPositions[pos].win.objBG);
+                                                                         io.rmvObj(playerPositions[pos].win.obj);
+                                                                         playerPositions[pos].win.obj = undefined;
+                                                                        // playerPositions[pos].win.objBG = undefined;
 
                                                                      })
                                                                      .addImage('res/win.png', function(){
                                                                         io.addToGroup('table',playerPositions[pos].win.objBG);
                                                                         io.addToGroup('table',playerPositions[pos].win.obj);
                                                                      });
-                    //筹码位置加皇冠
-                    playerPositions[players[i].NUMBER].bet.objBG.addImage('res/crown.png',function(){
-                        playerPositions[pos].bet.objBG.width = 56;
-                        playerPositions[pos].bet.objBG.height = 46;
-                    });
-                })(players[i].NUMBER);
-                playerPositions[players[i].NUMBER].win.obj = new iio.Text(players[i].ACTION, playerPositions[players[i].NUMBER].win.x, playerPositions[players[i].NUMBER].win.y + 65)
+                    playerPositions[players[i].NUMBER].win.obj = new iio.Text(players[i].ACTION, playerPositions[players[i].NUMBER].win.x, playerPositions[players[i].NUMBER].win.y + 65)
                                                                    .enableKinematics()
                                                                    .setVel(0,-0.5)
                                                                    .setFont('16px Microsoft YaHei')
                                                                    .setTextAlign('center')
                                                                    .setFillStyle('white');
+                    //筹码位置加皇冠
+                    playerPositions[players[i].NUMBER].bet.objBG =  new iio.SimpleRect(playerPositions[players[i].NUMBER].bet.x,playerPositions[players[i].NUMBER].bet.y - 30,50,40)
+                                                                .setAlpha(0)
+                                                                .fadeIn(.2)
+                                                                .addImage('res/crown.png',function(){
+                                                                    io.addToGroup('table',playerPositions[pos].bet.objBG);
+                                                                });
+                    //筹码位置显示赢取的筹码
+                    playerPositions[players[i].NUMBER].bet.obj = new iio.Text(players[i].ACTION, playerPositions[players[i].NUMBER].bet)
+                                                                   .setFont('16px Microsoft YaHei')
+                                                                   .setTextAlign('center')
+                                                                   .setFillStyle('white');
+                    io.addToGroup('table',playerPositions[players[i].NUMBER].bet.obj);
+                    })(players[i].NUMBER);
             }
+
+            //清空奖池
+            //io.rmvObj(potPosition.obj);
+            potPosition.obj.text = 0;
 
     	};
         recordHelper.echo('--- 得分 ---');
@@ -501,17 +518,22 @@ var PokerPlayback = function (io) {
                                                         .addImage('res/chips.png',function(){
                                                             io.addToGroup('table',playerPosition.bet.objBG);
                                                         });
-                        playerPosition.bet.obj = new iio.Text(action.money, playerPosition.bet)
+                        playerPosition.bet.obj = new iio.Text(recordHelper.chipsFormat(action.money), playerPosition.bet)
                                                     .setFont('16px Microsoft YaHei')
                                                     .setTextAlign('center')
                                                     .setFillStyle('white');
+                        playerPosition.bet.obj.chips = action.money;
                         io.addToGroup('table', playerPosition.bet.obj);
                     } else {
-                        playerPosition.bet.obj.setText(parseFloat(playerPosition.bet.obj.text) + parseFloat(action.money));
+                        var chips = parseFloat(playerPosition.bet.obj.chips) + parseFloat(action.money);
+                        playerPosition.bet.obj.chips = chips;
+                        playerPosition.bet.obj.setText(recordHelper.chipsFormat(chips));
                     }
                     // minus chips
                     if (typeof playerPosition.chips.obj != 'undefined') {
-                        playerPosition.chips.obj.setText(parseFloat(playerPosition.chips.obj.text) - parseFloat(action.money));
+                        var mchips = parseFloat(playerPosition.chips.obj.chips) - parseFloat(action.money);
+                        playerPosition.chips.obj.chips = mchips;
+                        playerPosition.chips.obj.setText(recordHelper.chipsFormat(mchips));
                     }
                 break;
             case 'check':
@@ -571,10 +593,10 @@ var PokerPlayback = function (io) {
     }
 
     function bet2pot(given) { //收集玩家下注到奖池
-        var pot = parseFloat(potPosition.obj.text);
+        var pot = parseFloat(potPosition.obj.chips);
         for (var i = 0; i < seats.length; i++) {
             if (typeof playerPositions[seats[i].NUMBER].bet.obj != 'undefined') { //注码
-                pot += parseFloat(playerPositions[seats[i].NUMBER].bet.obj.text);
+                pot += parseFloat(playerPositions[seats[i].NUMBER].bet.obj.chips);
                 io.rmvObj(playerPositions[seats[i].NUMBER].bet.obj);
                 playerPositions[seats[i].NUMBER].bet.obj = undefined;
 
@@ -582,7 +604,11 @@ var PokerPlayback = function (io) {
                 playerPositions[seats[i].NUMBER].bet.objBG = undefined;
             }
         }
-        potPosition.obj.setText(typeof given == 'undefined' ? pot : given);
+        if(typeof given == 'undefined') {
+            potPosition.obj.setText(recordHelper.chipsFormat(pot));
+        }else{
+            potPosition.obj.setText(recordHelper.chipsFormat(given));    
+        }
     }
     
    	function start(){
@@ -759,6 +785,18 @@ var recordHelper = {
         bet : 2000
     },
     infoPanl : {},
+    chipsFormat : function (chips) {
+        var chips = parseFloat(chips),ret = chips;
+        if (10000 < chips && chips < 1000000 ) {
+            chips = Math.round(chips / 1000);
+            ret = chips + 'k';
+        }
+        if(chips > 1000000) {
+            chips = Math.round(chips / 1000000);
+            ret = chips + 'M';
+        }
+        return ret;
+    },
     echo : function (msg) {
         this.infoPanl.append('<p>'+msg+'</p>')
     },
@@ -769,13 +807,13 @@ var recordHelper = {
                 type = '黑桃';
                 break;
             case 'h':
-                type = '红心';
+                type = '红桃';
                 break;
             case 'd':
-                type = '红钻';
+                type = '方片';
                 break;
             case 'c':
-                type = '黑梅';
+                type = '梅花';
                 break;
         }
         switch(e[0]) {

@@ -13,25 +13,25 @@
 			<SEAT>
 				<NUMBER>5</NUMBER>
 				<NAME>DANIER</NAME>
-				<CHIPS>203.20</CHIPS>
+				<CHIPS>20320</CHIPS>
 				<ICON>res/icon.png</ICON>
 			</SEAT>
 			<SEAT>
 				<NUMBER>6</NUMBER>
 				<NAME>JAVAHAVA</NAME>
-				<CHIPS>124.10</CHIPS>
+				<CHIPS>12410</CHIPS>
 				<ICON>res/icon.png</ICON>
 			</SEAT>
 			<SEAT>
 				<NUMBER>1</NUMBER>
 				<NAME>MESON23</NAME>
-				<CHIPS>88.25</CHIPS>
+				<CHIPS>8825</CHIPS>
 				<ICON>res/icon.png</ICON>
 			</SEAT>
 			<SEAT>
 				<NUMBER>4</NUMBER>
 				<NAME>MARLBORO1007</NAME>
-				<CHIPS>100.25</CHIPS>
+				<CHIPS>10025</CHIPS>
 				<ICON>res/icon.png</ICON>
 			</SEAT>
 			<SBLIND>
@@ -67,7 +67,7 @@
 			<PLAYER>
 				<NUMBER>1</NUMBER>
 				<NAME>MESON23</NAME>
-				<ACTION>call 4 to 6</ACTION>
+				<ACTION>call 40000 to 6</ACTION>
 			</PLAYER>
 			<FLOP>
 				<CARD>3h 5d 5h</CARD>     	
