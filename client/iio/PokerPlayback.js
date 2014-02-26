@@ -868,7 +868,7 @@ var recordHelper = {
         loadSound('playerFold','res/audio/player_fold.wav');
     },
     soundPlay : function (flag) {
-        if(this.sounds[flag].loaded){
+        if(this.sounds[flag] && this.sounds[flag].loaded){
             this.sounds[flag].play();
         }
     }
