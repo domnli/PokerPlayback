@@ -27,7 +27,7 @@
 	<div id ="infoPanl" style="width:620px;background-color:#aabfc3;text-align:left;padding:10px"></div>
 </body>
 <script type="text/javascript">
-	$.getJSON('/poker/server/poker.php',function(data){
+	$.getJSON('/server/poker.php',function(data){
 		recordHelper.data = data;
 		recordHelper.infoPanl = $('#infoPanl');
 		recordHelper.interval.blindShow = 2000;

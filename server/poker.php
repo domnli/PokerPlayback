@@ -4,8 +4,9 @@ class Poker {
 	public $xmlString;
 	public function __construct($xmlFileName) {
 		if (file_exists($xmlFileName)) {
-			$this->xmlObject = simplexml_load_file($xmlFileName);
+			
 			$this->xmlString = file_get_contents($xmlFileName);
+			$this->xmlObject = simplexml_load_string($this->xmlString);
 			if ($this->xmlObject === false) {
 				throw new Exception('not xml file');
 			}
