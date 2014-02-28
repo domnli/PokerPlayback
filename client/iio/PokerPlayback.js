@@ -846,7 +846,7 @@ var recordHelper = {
             case 'check':
                 msg += ' 看牌 ';
                 break;
-            case 'fold':
+            case 'folds':
                 msg += ' 弃牌 ';
                 break;
         }
@@ -862,14 +862,20 @@ var recordHelper = {
             that.sounds[o].addEventListener("canplaythrough",
                 function() { that.sounds[o].loaded = true; }, false);
         }
-        loadSound('cardOpen','res/audio/card_open.wav');
-        loadSound('chipThrow','res/audio/chip_throw.wav');
-        loadSound('playerCheck','res/audio/player_check.wav');
-        loadSound('playerFold','res/audio/player_fold.wav');
+        loadSound('cardOpen','http://20140111.liuyiblog.sinaapp.com/sound/card_open.ogg');
+        loadSound('chipThrow','http://20140111.liuyiblog.sinaapp.com/sound/chip_throw.ogg');
+        loadSound('playerCheck','http://20140111.liuyiblog.sinaapp.com/sound/player_check.ogg');
+        loadSound('playerFold','http://20140111.liuyiblog.sinaapp.com/sound/player_fold.ogg');
     },
+    soundInstance : null,
     soundPlay : function (flag) {
+        if(!this.soundInstance){
+            this.soundInstance = new Audio();
+        }
+        this.soundInstance.src = this.sounds[flag].src;
+        this.soundInstance.load();
         if(this.sounds[flag] && this.sounds[flag].loaded){
-            this.sounds[flag].play();
+            this.soundInstance.play();
         }
     }
 };

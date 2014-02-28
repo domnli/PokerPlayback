@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
  <HANDHISTORY>
 	<STAGE>
-		<TITLE>JJµÂÖİÆË¿Ë</TITLE>
+		<TITLE>JJå¾·å·æ‰‘å…‹</TITLE>
 		<ID>682816736</ID>
 		<TIME>2014/02/09 23:10:26</TIME>
 		 <TABLE>
-			<TITLE>ÈëÃÅ³¡</TITLE>
+			<TITLE>å…¥é—¨åœº</TITLE>
 			<CURRENCY>$</CURRENCY>
 			<ID>12345678</ID>
 			<SEATS>9</SEATS>
 			<DEALER>5</DEALER>
 			<SEAT>
 				<NUMBER>1</NUMBER>
-				<NAME>°×èë1971</NAME>
+				<NAME>ç™½æ¡¦1971</NAME>
 				<CHIPS>1994</CHIPS>
 				<ICON>http://image.quaner.me/id?100001</ICON>
 			</SEAT>
 			<SEAT>
 				<NUMBER>2</NUMBER>
-				<NAME>ºÚÒ¹dµÆ»ğ</NAME>
+				<NAME>é»‘å¤œdç¯ç«</NAME>
 				<CHIPS>1004</CHIPS>
 				<ICON>http://image.quaner.me/id?100001</ICON>
 			</SEAT>
 			<SEAT>
 				<NUMBER>3</NUMBER>
-				<NAME>Ã¿´ÎêÇ³Æ¶¼ÊÇ¸öÄÑÌâ</NAME>
+				<NAME>æ¯æ¬¡æ˜µç§°éƒ½æ˜¯ä¸ªéš¾é¢˜</NAME>
 				<CHIPS>1000</CHIPS>
 				<ICON>http://image.quaner.me/id?100001</ICON>
 			</SEAT>
 			<SEAT>
 				<NUMBER>4</NUMBER>
-				<NAME>°¢Á½¹úÊ¿</NAME>
+				<NAME>é˜¿ä¸¤å›½å£«</NAME>
 				<CHIPS>1009</CHIPS>
 				<ICON>http://image.quaner.me/id?100001</ICON>
 			</SEAT>
 			<SEAT>
 				<NUMBER>5</NUMBER>
-				<NAME>Ë®¹ûÖ®Î÷¹Ï</NAME>
+				<NAME>æ°´æœä¹‹è¥¿ç“œ</NAME>
 				<CHIPS>7395</CHIPS>
 				<ICON>http://image.quaner.me/id?100001</ICON>
 			</SEAT>
 			<SEAT>
 				<NUMBER>6</NUMBER>
-				<NAME>ËÕÎÄÆÕ</NAME>
+				<NAME>è‹æ–‡æ™®</NAME>
 				<CHIPS>0</CHIPS>
 				<ICON>http://image.quaner.me/id?100001</ICON>
 			</SEAT>			
@@ -58,42 +58,42 @@
 		 <POKERCARD>
 			<HOLECARD>
 				<NUMBER>3</NUMBER>
-				<NAME>Ã¿´ÎêÇ³Æ¶¼ÊÇ¸öÄÑÌâ</NAME>
+				<NAME>æ¯æ¬¡æ˜µç§°éƒ½æ˜¯ä¸ªéš¾é¢˜</NAME>
 				<CARD>Jc 6c</CARD>
 			</HOLECARD>
 			<PLAYER>
 				<NUMBER>3</NUMBER>
-				<NAME>Ã¿´ÎêÇ³Æ¶¼ÊÇ¸öÄÑÌâ</NAME>
+				<NAME>æ¯æ¬¡æ˜µç§°éƒ½æ˜¯ä¸ªéš¾é¢˜</NAME>
 				<ACTION>folds</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>4</NUMBER>
-				<NAME>°¢Á½¹úÊ¿</NAME>
+				<NAME>é˜¿ä¸¤å›½å£«</NAME>
 				<ACTION>folds</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>5</NUMBER>
-				<NAME>Ë®¹ûÖ®Î÷¹Ï</NAME>
+				<NAME>æ°´æœä¹‹è¥¿ç“œ</NAME>
 				<ACTION>folds</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>1</NUMBER>
-				<NAME>°×èë1971</NAME>
+				<NAME>ç™½æ¡¦1971</NAME>
 				<ACTION>call 25 to 50</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>2</NUMBER>
-				<NAME>ºÚÒ¹dµÆ»ğ</NAME>
+				<NAME>é»‘å¤œdç¯ç«</NAME>
 				<ACTION>allin 954 to 1004</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>3</NUMBER>
-				<NAME>Ã¿´ÎêÇ³Æ¶¼ÊÇ¸öÄÑÌâ</NAME>
+				<NAME>æ¯æ¬¡æ˜µç§°éƒ½æ˜¯ä¸ªéš¾é¢˜</NAME>
 				<ACTION>folds</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>1</NUMBER>
-				<NAME>°×èë1971</NAME>
+				<NAME>ç™½æ¡¦1971</NAME>
 				<ACTION>call 954 to 1004</ACTION>
 			</PLAYER>			
 			<FLOP>
@@ -112,17 +112,17 @@
 		 <SHOWDOWN>
 			<PLAYER>
 				<NUMBER>1</NUMBER>					
-				<NAME>°×èë1971</NAME>								
+				<NAME>ç™½æ¡¦1971</NAME>								
 				<CARD>As 9s</CARD>					
-				<DESCRP>¸ßÅÆ</DESCRP>				
-			<PLAYER>
+				<DESCRP>é«˜ç‰Œ</DESCRP>				
+			</PLAYER>
 			<PLAYER>
 				<NUMBER>2</NUMBER>					
-				<NAME>ºÚÒ¹dµÆ»ğ</NAME>
+				<NAME>é»‘å¤œdç¯ç«</NAME>
 				<ACTION>2008</ACTION>		
 				<CARD>Qc Ah</CARD>					
-				<DESCRP>Ò»¶Ô</DESCRP>				
-			<PLAYER>		
+				<DESCRP>ä¸€å¯¹</DESCRP>				
+			</PLAYER>		
 		 </SHOWDOWN>
 	 </STAGE>
- </HANDHISTORY>
+</HANDHISTORY>

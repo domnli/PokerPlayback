@@ -76,37 +76,37 @@
 		 <POKERCARD>
 			<HOLECARD>
 				<NUMBER>3</NUMBER>
-				<NAME>每次昵称都是个难题</NAME>
+				<NAME>脙驴麓脦锚脟鲁脝露录脢脟赂枚脛脩脤芒</NAME>
 				<CARD>Ts 4c</CARD>
 			</HOLECARD>
 			<PLAYER>
 				<NUMBER>6</NUMBER>
-				<NAME>苏文普</NAME>
+				<NAME>脣脮脦脛脝脮</NAME>
 				<ACTION>call 50 to 50</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>4</NUMBER>
-				<NAME>阿两国士</NAME>
+				<NAME>掳垄脕陆鹿煤脢驴</NAME>
 				<ACTION>folds</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>6</NUMBER>
-				<NAME>苏文普</NAME>
+				<NAME>脣脮脦脛脝脮</NAME>
 				<ACTION>check</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>1</NUMBER>
-				<NAME>白桦1971</NAME>
+				<NAME>掳脳猫毛1971</NAME>
 				<ACTION>call 50 to 50</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>2</NUMBER>
-				<NAME>黑夜d灯火</NAME>
+				<NAME>潞脷脪鹿d碌脝禄冒</NAME>
 				<ACTION>call 25 to 50</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>3</NUMBER>
-				<NAME>每次昵称都是个难题</NAME>
+				<NAME>脙驴麓脦锚脟鲁脝露录脢脟赂枚脛脩脤芒</NAME>
 				<ACTION>folds</ACTION>
 			</PLAYER>			
 			<FLOP>
@@ -115,22 +115,22 @@
 			</FLOP>
 			<PLAYER>
 				<NUMBER>2</NUMBER>
-				<NAME>黑夜d灯火</NAME>
+				<NAME>潞脷脪鹿d碌脝禄冒</NAME>
 				<ACTION>allin 1976 to 1976</ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>1</NUMBER>
-				<NAME>每次昵称都是个难题</NAME>
+				<NAME>脙驴麓脦锚脟鲁脝露录脢脟赂枚脛脩脤芒</NAME>
 				<ACTION>allin 892 to 892 </ACTION>
 			</PLAYER>
 			<PLAYER>
 				<NUMBER>1</NUMBER>
-				<NAME>苏文普</NAME>
+				<NAME>脣脮脦脛脝脮</NAME>
 				<ACTION>folds</ACTION>
 			</PLAYER>					
 			<PLAYER>
 				<NUMBER>1</NUMBER>
-				<NAME>白桦1971</NAME>
+				<NAME>掳脳猫毛1971</NAME>
 				<ACTION>allin 908 to 908</ACTION>
 			</PLAYER>			
 			<TURN>
@@ -145,18 +145,18 @@
 		 <SHOWDOWN>
 			<PLAYER>
 				<NUMBER>1</NUMBER>					
-				<NAME>白桦1971</NAME>				
+				<NAME>掳脳猫毛1971</NAME>				
 				<ACTION>1454</ACTION>				
 				<CARD>Qs Tc</CARD>					
-				<DESCRP>葫芦</DESCRP>				
-			<PLAYER>
+				<DESCRP>潞霉脗芦</DESCRP>				
+			</PLAYER>
 			<PLAYER>
 				<NUMBER>2</NUMBER>					
-				<NAME>黑夜d灯火</NAME>
+				<NAME>潞脷脪鹿d碌脝禄冒</NAME>
 				<ACTION>2522</ACTION>		
 				<CARD>Tc Qh</CARD>					
-				<DESCRP>葫芦</DESCRP>				
-			<PLAYER>		
+				<DESCRP>潞霉脗芦</DESCRP>				
+			</PLAYER>	
 		 </SHOWDOWN>
 	 </STAGE>
  </HANDHISTORY>

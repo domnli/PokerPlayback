@@ -88,6 +88,6 @@ class Poker {
 		return json_encode($pokerArr);
 	}
 }
-
-$poker = new Poker('handhistory.xml');
+$xmls = array('handhistory.xml','handhistory2.xml','handhistory3.xml','handhistory4.xml');
+$poker = new Poker($xmls[rand(0,3)]);
 echo $poker->exportJSON();

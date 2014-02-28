@@ -27,7 +27,8 @@
 	<div id ="infoPanl" style="width:620px;background-color:#aabfc3;text-align:left;padding:10px"></div>
 </body>
 <script type="text/javascript">
-	$.getJSON('/server/poker.php',function(data){
+	recordHelper.soundLoad();
+	$.getJSON('/poker/server/poker.php',function(data){
 		recordHelper.data = data;
 		recordHelper.infoPanl = $('#infoPanl');
 		recordHelper.interval.blindShow = 2000;
@@ -38,11 +39,13 @@
         recordHelper.interval.riverShow = 2000;
         recordHelper.interval.showDown = 2000;
         recordHelper.interval.bet = 3000;
-        recordHelper.soundLoad();
-		iio.start(PokerPlayback,'pokerPanl');
 	});
 
 	$(function(){
+		$('body').click(function(){
+			recordHelper.soundPlay('chipThrow');
+			iio.start(PokerPlayback,'pokerPanl');
+		});
 		$('#btnPause').click(function(){
 			recordHelper.pause();
 			$(this).hide();
