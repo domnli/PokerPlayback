@@ -4,8 +4,9 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="target-densitydpi=device-dpi, width=640px, user-scalable=no" />
 	<title>PokerPlayback</title>
-	<script src="iio/core/iioEngine.js"></script>
-	<script src="iio/PokerPlayback.min.js"></script>
+	<script src="js/lib/iio/iio.js"></script>
+	<!-- // <script src="iio/PokerPlayback.min.js"></script> -->
+	<script src="js/example.js"></script>
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 </head>
 <style type="text/css">
@@ -17,49 +18,67 @@
 	button.replay{width:150px;height:96px;border-style:none;background:url(res/replay.png)}
 	button.replay:active{background:url(res/replay_pressed.png);}
 </style>
-<body style="background-color:rgb(105, 200, 245);margin:0">
+<body style="background-color:rgb(105, 200, 245);margin:0;text-align:center">
 	<canvas id="pokerPanl" width="640px" height="960px"></canvas>
-	<div style="width:640px;height:96px;background:url(res/toolbar.jpg);text-align:center">
+	<div style="width:640px;height:96px;background:url(res/toolbar.jpg);text-align:center;margin:auto">
 		<button id="btnPause" class="pause"></button>
 		<button id="btnPlay" class="play" style="display:none"></button>
 		<button id="btnReplay" class="replay"></button>
 	</div>
-	<div id ="infoPanl" style="width:620px;background-color:#aabfc3;text-align:left;padding:10px"></div>
+	<div id ="infoPanl" style="width:620px;background-color:#aabfc3;text-align:left;padding:10px;margin:auto"></div>
 </body>
 <script type="text/javascript">
-	recordHelper.soundLoad();
-	$.getJSON('/poker/server/poker.php',function(data){
-		recordHelper.data = data;
-		recordHelper.infoPanl = $('#infoPanl');
-		recordHelper.interval.blindShow = 2000;
-        recordHelper.interval.holecardShow = 2000;
-        recordHelper.interval.preFlopShow = 2000;
-        recordHelper.interval.flopShow = 2000;
-        recordHelper.interval.turnShow = 2000;
-        recordHelper.interval.riverShow = 2000;
-        recordHelper.interval.showDown = 2000;
-        recordHelper.interval.bet = 3000;
+	
+	var loader = new iio.Loader( './assets' );
+	loader.load({id:"",name:"",},function(res){
+
 	});
 
-	$(function(){
-		$('body').click(function(){
-			recordHelper.soundPlay('chipThrow');
-			iio.start(PokerPlayback,'pokerPanl');
-		});
-		$('#btnPause').click(function(){
-			recordHelper.pause();
-			$(this).hide();
-			$('#btnPlay').show();
-		});
-		$('#btnPlay').click(function(){
-			recordHelper.pause();
-			$(this).hide();
-			$('#btnPause').show();
-		});
-		$('#btnReplay').click(function(){
-			$('#infoPanl').html('');
-			recordHelper.replay();
-		});
-	});
+	var con = {
+		a:function(){
+			console.log(this);
+		}
+	}
+
+
+
+
+
+
+
+	// recordHelper.soundLoad();
+	
+	// recordHelper.data = example;
+	// recordHelper.infoPanl = $('#infoPanl');
+	// recordHelper.interval.blindShow = 2000;
+ //    recordHelper.interval.holecardShow = 2000;
+ //    recordHelper.interval.preFlopShow = 2000;
+ //    recordHelper.interval.flopShow = 2000;
+ //    recordHelper.interval.turnShow = 2000;
+ //    recordHelper.interval.riverShow = 2000;
+ //    recordHelper.interval.showDown = 2000;
+ //    recordHelper.interval.bet = 3000;
+	
+
+	// $(function(){
+	// 	$('body').click(function(){
+	// 		recordHelper.soundPlay('chipThrow');
+	// 		iio.start(PokerPlayback,'pokerPanl');
+	// 	});
+	// 	$('#btnPause').click(function(){
+	// 		recordHelper.pause();
+	// 		$(this).hide();
+	// 		$('#btnPlay').show();
+	// 	});
+	// 	$('#btnPlay').click(function(){
+	// 		recordHelper.pause();
+	// 		$(this).hide();
+	// 		$('#btnPause').show();
+	// 	});
+	// 	$('#btnReplay').click(function(){
+	// 		$('#infoPanl').html('');
+	// 		recordHelper.replay();
+	// 	});
+	// });
 </script>
 </html>
