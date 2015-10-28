@@ -3,7 +3,7 @@ var Resource = {
 		this.sounds = {};
 		this.images = {};
 
-		var loader = new iio.Loader(config.resourcepath);
+		var loader = new iio.Loader(global.resourcepath);
 		function loadSounds(){
 			this.sounds = loader.load(
 				[{id:'cardopen',name:'audio/card_open.ogg'},

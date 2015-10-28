@@ -2,13 +2,16 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="target-densitydpi=device-dpi, width=640px, user-scalable=no" />
+	<meta name="viewport" content="target-densitydpi=device-dpi, width=640, user-scalable=no" />
 	<title>PokerPlayback</title>
 	<script src="js/lib/iio/iio.js"></script>
 	<!-- // <script src="iio/PokerPlayback.min.js"></script> -->
 	<script src="js/example.js"></script>
-	<script src="js/config.js"></script>
+	<script src="js/global.js"></script>
+	<script src="js/utils.js"></script>
 	<script src="js/resource.js"></script>
+	<script src="js/player.js"></script>
+	<script src="js/table.js"></script>
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 </head>
 <style type="text/css">
@@ -20,18 +23,24 @@
 	button.replay{width:150px;height:96px;border-style:none;background:url(res/replay.png)}
 	button.replay:active{background:url(res/replay_pressed.png);}
 </style>
-<!-- <body style="background-color:rgb(105, 200, 245);margin:0;text-align:center">
-	<canvas id="pokerPanl" width="640px" height="960px"></canvas>
+<body style="background-color:rgb(105, 200, 245);margin:0;text-align:center">
+	<canvas id="pokerTable" width="640px" height="960px"></canvas>
 	<div style="width:640px;height:96px;background:url(res/toolbar.jpg);text-align:center;margin:auto">
 		<button id="btnPause" class="pause"></button>
 		<button id="btnPlay" class="play" style="display:none"></button>
 		<button id="btnReplay" class="replay"></button>
 	</div>
 	<div id ="infoPanl" style="width:620px;background-color:#aabfc3;text-align:left;padding:10px;margin:auto"></div>
-</body> -->
+</body>
 <script type="text/javascript">
-	
+
 	Resource.init();
+	Table.init(example.STAGE.TABLE);
+	var t = function(app){
+		Table.renderTo(app);
+		window.app = app;
+	};
+	iio.start(t,'pokerTable');
 
 
 
@@ -73,4 +82,5 @@
 	// 	});
 	// });
 </script>
+
 </html>
